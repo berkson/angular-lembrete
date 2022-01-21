@@ -14,6 +14,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LoginService } from './services';
+import { HttpUtilService } from 'src/app/shared/services';
+import { SharedModule } from 'src/app/shared';
 
 @NgModule({
   declarations: [LoginComponent, LoginTemplateComponent],
@@ -29,7 +31,8 @@ import { LoginService } from './services';
     MatIconModule,
     MatSnackBarModule,
     FlexLayoutModule,
+    SharedModule,
   ],
-  providers: [LoginService],
+  providers: [LoginService, HttpUtilService],
 })
 export class LoginModule {}

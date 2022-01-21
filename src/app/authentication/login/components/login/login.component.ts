@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { CpfValidator } from 'src/app/shared';
+import { HttpUtilService } from 'src/app/shared/services';
+import { LoginService } from '../../services';
+import { Credentials } from '../models';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +18,9 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private snack: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private loginService: LoginService,
+    private httpUtils: HttpUtilService
   ) {
     this.form = new FormGroup({});
   }
@@ -26,17 +31,29 @@ export class LoginComponent implements OnInit {
 
   generateForm() {
     this.form = this.fb.group({
-      cpf: ['', Validators.required, CpfValidator],
-      password: ['', Validators.required, Validators.min(6)],
+      cpf: ['', [Validators.required, CpfValidator]],
+      password: ['', [Validators.required, Validators.min(6)]],
     });
+  }
+
+  get cpf() {
+    return this.form.get('cpf');
   }
 
   login() {
     if (this.form.invalid) {
-      this.snack.open('Dados inválidos', 'Erro', { duration: 5000 });
       return;
     }
-
-    alert(JSON.stringify(this.form.value));
+    const credentials: Credentials = this.form.value;
+    this.loginService.login(credentials).subscribe({
+      next: (data) => {
+        this.httpUtils.authenticated = data.cpf !== null;
+        console.log(JSON.stringify(data));
+      },
+      error: (err) => {
+        this.httpUtils.authenticated = false;
+        console.log('Erro ao logar!');
+      },
+    });
   }
 }

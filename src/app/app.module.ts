@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginModule, LoginRoutingModule } from './authentication';
+import { SharedModule } from './shared';
 
 @NgModule({
   declarations: [AppComponent],

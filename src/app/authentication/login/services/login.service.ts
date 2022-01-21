@@ -1,19 +1,25 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Credentials } from '../components';
 import { environment as env } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { HttpUtilService } from 'src/app/shared/services';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  private readonly PATH: string = 'user';
+  public static readonly AUTH_PATH: string = env.baseApiUrl + 'user';
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private httpUtils: HttpUtilService
+  ) {}
 
   login(credentials: Credentials): Observable<any> {
-    // TODO: Verificar melhor maneira de autenticar
-    return this.httpClient.get(env.baseApiUrl + this.PATH, credentials);
+    return this.httpClient.get(
+      LoginService.AUTH_PATH,
+      this.httpUtils.authHeaders(credentials)
+    );
   }
 }

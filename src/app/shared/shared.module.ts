@@ -2,14 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaskDirective } from './directives/mask.directive';
 
-
-
 @NgModule({
-  declarations: [
-    MaskDirective
-  ],
-  imports: [
-    CommonModule
-  ]
+  declarations: [MaskDirective],
+  imports: [CommonModule],
+  exports: [MaskDirective],
 })
-export class SharedModule { }
+export class SharedModule {}
