@@ -25,7 +25,7 @@ export class HttpUtilService {
       credentials.username + ':' + credentials.password
     )}`;
     const headers = new HttpHeaders(
-      credentials ? { authorization: authValue } : {}
+      credentials ? { Authorization: authValue } : {}
     );
 
     return { headers: headers };

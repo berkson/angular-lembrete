@@ -1,26 +1,31 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginModule, LoginRoutingModule } from './authentication';
-import { SharedModule } from './shared';
+import { HttpClientXsrfModule } from '@angular/common/http';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MatButtonModule,
+    MatToolbarModule,
+    MatIconModule,
     LoginModule,
     LoginRoutingModule,
+    HttpClientXsrfModule,
 
     AppRoutingModule,
   ],
-  providers: [],
+  providers: [
+    //  { provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

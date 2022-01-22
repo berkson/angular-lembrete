@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
 
   generateForm() {
     this.form = this.fb.group({
-      cpf: ['', [Validators.required, CpfValidator]],
+      username: ['', [Validators.required, CpfValidator]],
       password: ['', [Validators.required, Validators.min(6)]],
     });
   }
@@ -45,12 +45,14 @@ export class LoginComponent implements OnInit {
       return;
     }
     const credentials: Credentials = this.form.value;
+    console.log(JSON.stringify(credentials));
     this.loginService.login(credentials).subscribe({
       next: (data) => {
-        this.httpUtils.authenticated = data.cpf !== null;
+        this.httpUtils.authenticated = data.cpf !== null; 
         console.log(JSON.stringify(data));
       },
       error: (err) => {
+        console.log(JSON.stringify(err));
         this.httpUtils.authenticated = false;
         console.log('Erro ao logar!');
       },

@@ -1,1 +1,21 @@
+<mat-toolbar color="primary">
+  <span>Sistema de Gerenciamento de Contratos</span>
+  <span class="toolbar-spacer"></span>
+  <a
+    (click)="exit()"
+    style="cursor: pointer"
+    alt="Sair"
+    title="Sair"
+    *ngIf="authenticated()"
+  >
+    <mat-icon class="toolbar-icon" matTooltip="Sair"> exit_to_app </mat-icon>
+  </a>
+</mat-toolbar>
 <router-outlet></router-outlet>
+<mat-toolbar color="primary">
+  <span>
+    Autarquia Municipal de Trânsito e Cidadania - AMC <br />
+    Av. Desembargador Gonzaga, 1630 - Cidade dos Funcionarios - Fortaleza - CE -
+    CEP - 60.823-012 - Tel: +55 (85) 3452.5811
+  </span>
+</mat-toolbar>
