@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginModule, LoginRoutingModule } from './authentication';
 import { HttpClientXsrfModule } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,12 +21,11 @@ import { MatIconModule } from '@angular/material/icon';
     LoginModule,
     LoginRoutingModule,
     HttpClientXsrfModule,
+    FlexLayoutModule,
 
     AppRoutingModule,
   ],
-  providers: [
-    //  { provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true },
-  ],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
