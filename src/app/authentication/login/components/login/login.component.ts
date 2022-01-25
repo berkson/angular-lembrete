@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
     console.log(JSON.stringify(credentials));
     this.loginService.login(credentials).subscribe({
       next: (data) => {
-        this.httpUtils.authenticated = data.cpf !== null; 
+        this.httpUtils.authenticated = data.cpf !== null;
         console.log(JSON.stringify(data));
       },
       error: (err) => {
