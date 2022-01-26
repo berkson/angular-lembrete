@@ -1,6 +1,6 @@
 import { InjectionToken } from '@angular/core';
-import { Observable } from 'rxjs';
-import { HttpHandler } from '@angular/common/http';
+import { catchError, map, Observable, of } from 'rxjs';
+import { HttpHandler, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { HttpInterceptor } from '@angular/common/http';
 import { HttpRequest } from '@angular/common/http';
 import { HttpEvent } from '@angular/common/http';
@@ -21,7 +21,7 @@ export const XSRF_HEADER_NAME: InjectionToken<string> =
   providedIn: 'root',
 })
 export class HttpXsrfCookieExtractor implements HttpXsrfTokenExtractor {
-  private lastCookieString: string | null = '';
+  private lastCookieString: string | null = null;
   private lastToken: string | null = null;
   private parseCount: number = 0;
   private MAX_RETRIES: number = 5;
@@ -31,33 +31,47 @@ export class HttpXsrfCookieExtractor implements HttpXsrfTokenExtractor {
     @Inject(PLATFORM_ID) private platform: string,
     @Inject(XSRF_COOKIE_NAME) private cookieName: string,
     private httpClient: HttpClient
-  ) {}
+  ) { }
 
   //make a HEAD request to retrieve the cookie
   //TODO: Verificar o uso
 
-  headRequest(): Promise<any> {
-    let promise = new Promise<void>((resolve, reject) => {
-      console.log('head request:');
-      this.httpClient
-        .head('/_app/', { observe: 'response' })
-        .toPromise()
-        .then((response) => {
-          console.log('headRequest resolved');
-          this.lastCookieString = response!.headers.get(this.cookieName); //”X-XSRF-TOKEN”
-          this.lastToken = response!.headers.get(
-            this.lastCookieString != null ? this.lastCookieString : ''
-          );
-          resolve();
-        })
-        .catch((err) => {
-          console.log('headRequest rejected');
-          reject();
-        });
-    });
+  headRequest(): Observable<any> {
+    return this.httpClient.head('https://localhost:8443/api/user/csrf', { observe: 'response'})
+      .pipe(map(response => {
+        console.log('headRequest resolved');
+        console.log(response.headers.get('cache-control'));
 
-    return promise;
+        //.lastCookieString = response.headers.get(this.cookieName); //”X-XSRF-TOKEN”
+        // console.log('lastCookie: ' + this.lastCookieString);
+        // this.lastToken = response.headers.get(
+        //   this.lastCookieString != null ? this.lastCookieString : '');
+
+      }));
   }
+
+  // headRequest(): Promise<any> {
+  //   let promise = new Promise<void>((resolve, reject) => {
+  //     console.log('head request:');
+  //     this.httpClient
+  //       .head('https://localhost:8443/', { observe: 'response' })
+  //       .toPromise()
+  //       .then((response) => {
+  //         console.log('headRequest resolved');
+  //         this.lastCookieString = response!.headers.get(this.cookieName); //”X-XSRF-TOKEN”
+  //         this.lastToken = response!.headers.get(
+  //           this.lastCookieString != null ? this.lastCookieString : ''
+  //         );
+  //         resolve();
+  //       })
+  //       .catch((err) => {
+  //         console.log('headRequest rejected');
+  //         reject();
+  //       });
+  //   });
+
+  //   return promise;
+  // }
 
   getToken(): string | null {
     if (this.platform === 'server') {
@@ -70,6 +84,14 @@ export class HttpXsrfCookieExtractor implements HttpXsrfTokenExtractor {
       this.parseCount++;
       console.log('expecting the promise: headRequest()');
       this.headRequest();
+      //{
+      //   next: (data) => {
+      //     console.log(data);
+      //   },
+      //   error: (err) => {
+      //     console.log(err);
+      //   }
+      // });
     } while (this.lastToken == null && this.parseCount < this.MAX_RETRIES);
 
     return this.lastToken;
