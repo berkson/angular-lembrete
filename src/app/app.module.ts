@@ -15,22 +15,20 @@ import {
 } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { CustomInterceptor } from './shared/interceptors/custom-interceptor';
 import {
   HttpXsrfCookieExtractor,
   XSRF_COOKIE_NAME,
   XSRF_HEADER_NAME,
-} from './shared/interceptors/httpxsrf-cookie-extractor';
+  HttpXsrfInterceptor,
+  XhrInterceptor,
+} from './shared';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
-    HttpClientXsrfModule.withOptions({
-      cookieName: 'XSRF-TOKEN',
-      headerName: 'X-XSRF-TOKEN',
-    }),
+    HttpClientXsrfModule.withOptions(),
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,
@@ -41,9 +39,10 @@ import {
     AppRoutingModule,
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true },
     {
       provide: HTTP_INTERCEPTORS,
-      useExisting: CustomInterceptor,
+      useExisting: HttpXsrfInterceptor,
       multi: true,
     },
     { provide: HttpXsrfTokenExtractor, useClass: HttpXsrfCookieExtractor },

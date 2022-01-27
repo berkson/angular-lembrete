@@ -5,14 +5,7 @@ import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [MaskDirective],
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    HttpClientXsrfModule.withOptions({
-      cookieName: 'XSRF-TOKEN',
-      headerName: 'X-XSRF-TOKEN',
-    }),
-  ],
+  imports: [CommonModule, HttpClientModule, HttpClientXsrfModule],
   exports: [MaskDirective],
 })
 export class SharedModule {}

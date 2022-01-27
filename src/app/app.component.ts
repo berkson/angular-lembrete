@@ -23,7 +23,7 @@ export class AppComponent {
 
   exit() {
     this.httpClient
-      .post(env.baseUrl + 'logout', {})
+      .post('//localhost:8443/logout', { withCredentials: 'true' })
       .pipe(
         finalize(() => {
           //this.httpUtils.authenticated = false;

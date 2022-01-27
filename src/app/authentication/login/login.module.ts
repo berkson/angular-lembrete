@@ -29,10 +29,7 @@ import {
     RouterModule,
     ReactiveFormsModule,
     HttpClientModule,
-    HttpClientXsrfModule.withOptions({
-      cookieName: 'XSRF-TOKEN',
-      headerName: 'X-XSRF-TOKEN',
-    }),
+    HttpClientXsrfModule,
     MatInputModule,
     MatButtonModule,
     MatListModule,
