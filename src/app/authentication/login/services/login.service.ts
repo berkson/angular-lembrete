@@ -17,9 +17,6 @@ export class LoginService {
   ) {}
 
   login(credentials: Credentials): Observable<any> {
-    console.log(
-      this.httpUtils.authHeaders(credentials).headers.get('Authorization')
-    );
     return this.httpClient.get(
       LoginService.AUTH_PATH,
       this.httpUtils.authHeaders(credentials)

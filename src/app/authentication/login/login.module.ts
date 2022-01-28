@@ -29,7 +29,7 @@ import {
     RouterModule,
     ReactiveFormsModule,
     HttpClientModule,
-    HttpClientXsrfModule,
+    HttpClientXsrfModule.withOptions(),
     MatInputModule,
     MatButtonModule,
     MatListModule,

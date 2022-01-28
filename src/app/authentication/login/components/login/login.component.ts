@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { CpfValidator } from 'src/app/shared';
-import { HttpUtilService } from 'src/app/shared/services';
+import { ApiError, CpfValidator, ErrorService } from 'src/app/shared';
+import { HttpUtilService } from 'src/app/shared';
 import { LoginService } from '../../services';
 import { Credentials } from '../models';
 
@@ -17,7 +16,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private snack: MatSnackBar,
+    private errorService: ErrorService,
     private router: Router,
     private loginService: LoginService,
     private httpUtils: HttpUtilService
@@ -45,16 +44,14 @@ export class LoginComponent implements OnInit {
       return;
     }
     const credentials: Credentials = this.form.value;
-    console.log(JSON.stringify(credentials));
     this.loginService.login(credentials).subscribe({
       next: (data) => {
         this.httpUtils.authenticated = data.cpf !== null;
-        console.log(JSON.stringify(data));
       },
       error: (err) => {
-        console.log(JSON.stringify(err));
         this.httpUtils.authenticated = false;
-        console.log('Erro ao logar!');
+        let errors: ApiError[] = err.error.errors;
+        this.errorService.showSnack(errors);
       },
     });
   }

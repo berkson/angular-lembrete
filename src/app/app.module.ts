@@ -28,7 +28,7 @@ import {
   imports: [
     BrowserModule,
     HttpClientModule,
-    HttpClientXsrfModule.withOptions(),
+    HttpClientXsrfModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,

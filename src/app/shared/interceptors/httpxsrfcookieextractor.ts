@@ -29,7 +29,6 @@ export class HttpXsrfCookieExtractor implements HttpXsrfTokenExtractor {
     if (this.platform === 'server') {
       return null;
     }
-    console.log('cookie: ' + this.doc.cookie);
     const cookieString = this.doc.cookie || '';
     if (cookieString !== this.lastCookieString) {
       this.parseCount++;

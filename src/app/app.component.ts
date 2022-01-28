@@ -26,7 +26,7 @@ export class AppComponent {
       .post('//localhost:8443/logout', { withCredentials: 'true' })
       .pipe(
         finalize(() => {
-          //this.httpUtils.authenticated = false;
+          this.httpUtils.authenticated = false;
           this.router.navigate(['/']);
         })
       )

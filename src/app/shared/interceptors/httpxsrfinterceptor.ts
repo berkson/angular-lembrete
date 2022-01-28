@@ -27,12 +27,15 @@ export class HttpXsrfInterceptor implements HttpInterceptor {
     // Non-mutating requests don't require a token, and absolute URLs require special handling
     // anyway as the cookie set
     // on our origin is not the same as the token expected by another origin.
-    console.log(req.headers.keys());
-    if (req.method === 'GET' || req.method === 'HEAD') {
+    if (
+      req.method === 'GET' ||
+      req.method === 'HEAD' ||
+      lcUrl.startsWith('http://') ||
+      lcUrl.startsWith('https://')
+    ) {
       return next.handle(req);
     }
     const token = this.tokenService.getToken();
-    console.log('A porra do token: ' + token);
 
     // Be careful not to overwrite an existing header of the same name.
     if (token !== null && !req.headers.has(this.headerName)) {
