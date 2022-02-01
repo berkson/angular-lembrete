@@ -21,9 +21,11 @@ import {
   ErrorStateMatcher,
   ShowOnDirtyErrorStateMatcher,
 } from '@angular/material/core';
+import { ForgotpassComponent } from './components/forgotpass/forgotpass.component';
+import { InformcodeComponent } from './components/informcode/informcode.component';
 
 @NgModule({
-  declarations: [LoginComponent, LoginTemplateComponent],
+  declarations: [LoginComponent, LoginTemplateComponent, ForgotpassComponent, InformcodeComponent],
   imports: [
     CommonModule,
     RouterModule,
