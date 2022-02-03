@@ -1,7 +1,7 @@
-import { Cpf.Validator } from './cpf.validator';
+import { CpfValidator } from './cpf.validator';
 
-describe('Cpf.Validator', () => {
+describe('CpfValidator', () => {
   it('should create an instance', () => {
-    expect(new Cpf.Validator()).toBeTruthy();
+    expect(new CpfValidator()).toBeTruthy();
   });
 });

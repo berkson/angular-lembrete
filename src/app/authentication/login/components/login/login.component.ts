@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ApiError, CpfValidator, ErrorService } from 'src/app/shared';
+import {
+  ApiError,
+  CpfValidator,
+  ErrorMessages,
+  ErrorService,
+} from 'src/app/shared';
 import { HttpUtilService } from 'src/app/shared';
 import { LoginService } from '../../services';
 import { Credentials } from '../models';
@@ -49,9 +54,13 @@ export class LoginComponent implements OnInit {
         this.httpUtils.authenticated = data.cpf !== null;
       },
       error: (err) => {
-        this.httpUtils.authenticated = false;
-        let errors: ApiError[] = err.error.errors;
-        this.errorService.showSnack(errors);
+        try {
+          this.httpUtils.authenticated = false;
+          let errors: ApiError[] = err.error.errors;
+          this.errorService.showSnack(errors);
+        } catch (e) {
+          this.errorService.snackMessage(ErrorMessages.tryAgain);
+        }
       },
     });
   }
