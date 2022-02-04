@@ -18,19 +18,19 @@ export class ErrorService {
    * Mostra a mensagem na snackbar por 5 segundos
    * @param message mensagem a ser mostrada na snackbar
    */
-  snackMessage(message: string){
+  snackMessage(message: string) {
     this.snack.open(message, ErrorMessages.error, {
       duration: 5000,
     });
   }
 
-  oneError(error: ApiError): void {
+  private oneError(error: ApiError): void {
     this.snack.open(error.message, ErrorMessages.error, {
       duration: 5000,
     });
   }
 
-  multiError(errors: ApiError[]): void {
+  private multiError(errors: ApiError[]): void {
     let message = '';
 
     for (let i = 0; i < errors.length; i++) {

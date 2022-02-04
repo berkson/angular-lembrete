@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { map } from 'rxjs';
 import {
   ApiError,
@@ -24,7 +25,8 @@ export class ForgotpassComponent implements OnInit {
     private fb: FormBuilder,
     private httpClient: HttpClient,
     private snackBar: MatSnackBar,
-    private errorService: ErrorService
+    private errorService: ErrorService,
+    private router: Router
   ) {
     this.form = new FormGroup({});
   }
@@ -53,6 +55,7 @@ export class ForgotpassComponent implements OnInit {
             this.snackBar.open(Messages.emailSuccess, Messages.success, {
               duration: 5000,
             });
+          this.router.navigate(['/login/informcode']);
         })
       )
       .subscribe({
