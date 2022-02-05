@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ErrorMessages } from '../messages';
+import { ErrorMessages, Messages } from '../messages';
 import { ApiError } from '../models';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ErrorService {
+export class MessageService {
   constructor(private snack: MatSnackBar) {}
 
-  showSnack(errors: ApiError[]): void {
+  showSnackErrors(errors: ApiError[]): void {
     if (errors.length > 1) this.multiError(errors);
     else this.oneError(errors[0]);
   }
@@ -18,15 +18,30 @@ export class ErrorService {
    * Mostra a mensagem na snackbar por 5 segundos
    * @param message mensagem a ser mostrada na snackbar
    */
-  snackMessage(message: string) {
+  snackErrorMessage(message: string) {
     this.snack.open(message, ErrorMessages.error, {
       duration: 5000,
+      panelClass: ['style-error'],
+      verticalPosition: 'top',
+    });
+  }
+
+  /**
+   * Mostra a mensagem na snackbar por 5 segundos
+   * @param message mensagem a ser mostrada na snackbar
+   */
+  snackSuccessMessage(message: string) {
+    this.snack.open(message, Messages.success, {
+      duration: 5000,
+      verticalPosition: 'top',
     });
   }
 
   private oneError(error: ApiError): void {
     this.snack.open(error.message, ErrorMessages.error, {
       duration: 5000,
+      panelClass: ['style-error'],
+      verticalPosition: 'top',
     });
   }
 
@@ -43,6 +58,8 @@ export class ErrorService {
 
     this.snack.open(message, ErrorMessages.error, {
       duration: 5000,
+      panelClass: ['style-error'],
+      verticalPosition: 'top',
     });
   }
 }

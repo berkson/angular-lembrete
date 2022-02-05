@@ -5,7 +5,7 @@ import {
   ApiError,
   CpfValidator,
   ErrorMessages,
-  ErrorService,
+  MessageService,
 } from 'src/app/shared';
 import { HttpUtilService } from 'src/app/shared';
 import { LoginService } from '../../services';
@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private errorService: ErrorService,
+    private errorService: MessageService,
     private router: Router,
     private loginService: LoginService,
     private httpUtils: HttpUtilService
@@ -57,9 +57,9 @@ export class LoginComponent implements OnInit {
         try {
           this.httpUtils.authenticated = false;
           let errors: ApiError[] = err.error.errors;
-          this.errorService.showSnack(errors);
+          this.errorService.showSnackErrors(errors);
         } catch (e) {
-          this.errorService.snackMessage(ErrorMessages.tryAgain);
+          this.errorService.snackErrorMessage(ErrorMessages.tryAgain);
         }
       },
     });

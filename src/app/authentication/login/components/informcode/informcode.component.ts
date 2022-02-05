@@ -2,11 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { map } from 'rxjs';
 import {
   ApiError,
   CpfValidator,
   ErrorMessages,
-  ErrorService,
+  MessageService,
   Messages,
 } from 'src/app/shared';
 import { environment as env } from 'src/environments/environment';
@@ -24,13 +26,14 @@ export class InformcodeComponent implements OnInit {
   private _hidePassForm: boolean;
   private _hideForm: boolean;
   public readonly VALIDATE_CODE_PATH = 'user/validatecode/';
+  public readonly CHANGE_PASS_PATH = 'user/changepass';
   codeFormValues: any;
 
   constructor(
     private fb: FormBuilder,
     private httpClient: HttpClient,
-    private snackBar: MatSnackBar,
-    private errorService: ErrorService
+    private messageService: MessageService,
+    private router: Router
   ) {
     this.form = new FormGroup({});
     this.formPass = new FormGroup({});
@@ -88,26 +91,19 @@ export class InformcodeComponent implements OnInit {
           if (code.isValid) {
             this._hideForm = !this._hideForm;
             this._hidePassForm = !this._hidePassForm;
-            this.snackBar.open(
-              Messages.codeSuccess + ' ' + Messages.enterNewPass,
-              Messages.success,
-              {
-                duration: 5000,
-              }
+            this.messageService.snackSuccessMessage(
+              Messages.codeSuccess + ' ' + Messages.enterNewPass
             );
           } else {
-            this.snackBar.open(ErrorMessages.codeError, ErrorMessages.error, {
-              duration: 5000,
-              panelClass: ['style-error'],
-            });
+            this.messageService.snackErrorMessage(ErrorMessages.codeError);
           }
         },
         error: (err) => {
           try {
             let errors: ApiError[] = err.error.errors;
-            this.errorService.showSnack(errors);
+            this.messageService.showSnackErrors(errors);
           } catch (e) {
-            this.errorService.snackMessage(ErrorMessages.tryAgain);
+            this.messageService.snackErrorMessage(ErrorMessages.tryAgain);
           }
         },
       });
@@ -122,13 +118,33 @@ export class InformcodeComponent implements OnInit {
         this.codeFormValues.code,
         formPass.password
       );
-      //TODO: Concluir esta classe.
-      //this.httpClient.post();
+      this.httpClient
+        .post(env.baseApiHOff + this.CHANGE_PASS_PATH, codeVerifyDTO, {
+          withCredentials: true,
+          observe: 'response',
+        })
+        .pipe(
+          map((response) => {
+            if (response.status == 200) {
+              this.messageService.snackSuccessMessage(
+                Messages.changePassSuccess
+              );
+              this.router.navigate(['/login']);
+            }
+          })
+        )
+        .subscribe({
+          error: (err) => {
+            try {
+              let errors: ApiError[] = err.error.errors;
+              this.messageService.showSnackErrors(errors);
+            } catch (e) {
+              this.messageService.snackErrorMessage(ErrorMessages.tryAgain);
+            }
+          },
+        });
     } else {
-      this.snackBar.open(ErrorMessages.passNotEqual, ErrorMessages.error, {
-        duration: 5000,
-        panelClass: ['style-error'],
-      });
+      this.messageService.snackErrorMessage(ErrorMessages.passNotEqual);
     }
   }
 }

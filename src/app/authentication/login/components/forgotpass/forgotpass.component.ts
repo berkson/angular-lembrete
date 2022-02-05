@@ -7,7 +7,7 @@ import { map } from 'rxjs';
 import {
   ApiError,
   ErrorMessages,
-  ErrorService,
+  MessageService,
   Messages,
 } from 'src/app/shared';
 import { environment as env } from 'src/environments/environment';
@@ -24,8 +24,7 @@ export class ForgotpassComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private httpClient: HttpClient,
-    private snackBar: MatSnackBar,
-    private errorService: ErrorService,
+    private messageService: MessageService,
     private router: Router
   ) {
     this.form = new FormGroup({});
@@ -51,20 +50,19 @@ export class ForgotpassComponent implements OnInit {
       })
       .pipe(
         map((response) => {
-          if (response.status == 200)
-            this.snackBar.open(Messages.emailSuccess, Messages.success, {
-              duration: 5000,
-            });
-          this.router.navigate(['/login/informcode']);
+          if (response.status == 200) {
+            this.messageService.snackSuccessMessage(Messages.emailSuccess);
+            this.router.navigate(['/login/informcode']);
+          }
         })
       )
       .subscribe({
         error: (err) => {
           try {
             let errors: ApiError[] = err.error.errors;
-            this.errorService.showSnack(errors);
+            this.messageService.showSnackErrors(errors);
           } catch (e) {
-            this.errorService.snackMessage(ErrorMessages.tryAgain);
+            this.messageService.snackErrorMessage(ErrorMessages.tryAgain);
           }
         },
       });
