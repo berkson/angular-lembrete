@@ -7,6 +7,7 @@ export class User {
     public email?: string,
     public name?: string,
     public enabled?: boolean,
-    public roles?: Array<Role>
+    public roles?: Array<Role>,
+    public auth?: string
   ) {}
 }

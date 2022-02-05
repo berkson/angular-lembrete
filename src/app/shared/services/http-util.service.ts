@@ -28,14 +28,19 @@ export class HttpUtilService {
     this._authenticated = value;
   }
 
-  authHeaders(credentials: Credentials) {
-    // gera o valor do cabeçalho básico de autenticação com criptografia 64
-    let authValue: string = `Basic ${btoa(
+  authHeaders(credentials: Credentials | string) {
+    // usuário já está logado
+    if (typeof credentials === 'string') {
+      const headers = new HttpHeaders(
+        credentials ? { Authorization: credentials } : {}
+      );
+      return { headers: headers };
+    }
+    // primeiro login
+    let auth = `Basic ${btoa(
       credentials.username + ':' + credentials.password
     )}`;
-    const headers = new HttpHeaders(
-      credentials ? { Authorization: authValue } : {}
-    );
+    const headers = new HttpHeaders(credentials ? { Authorization: auth } : {});
 
     return { headers: headers };
   }

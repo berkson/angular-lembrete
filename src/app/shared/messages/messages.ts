@@ -3,6 +3,7 @@ export const ErrorMessages = {
   tryAgain: 'Tente novamente mais tarde!',
   codeError: 'Código incorreto!',
   passNotEqual: 'Senha e confirmação diferem!',
+  sessionExpired: 'Sua sessão expirou, logue novamente!',
 };
 export const Messages = {
   success: 'Sucesso',

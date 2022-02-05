@@ -50,10 +50,13 @@ export class LoginComponent implements OnInit {
       return;
     }
     const credentials: Credentials = this.form.value;
-    this.loginService.login(credentials).subscribe({
+    this.loginService.loginWithCredentialsOrHeader(credentials).subscribe({
       next: (data) => {
         this.httpUtils.authenticated = data.cpf !== null;
         this.httpUtils.user = data as User;
+        this.httpUtils.user.auth = `Basic ${btoa(
+          credentials.username + ':' + credentials.password
+        )}`;
         this.router.navigate(['contract']);
       },
       error: (err) => {

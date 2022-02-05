@@ -8,6 +8,7 @@ import {
   RegisterComponent,
 } from './components';
 import { ContractRoutingModule } from './contract-routing.module';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [ContractComponent, ListingComponent, RegisterComponent],
@@ -15,6 +16,7 @@ import { ContractRoutingModule } from './contract-routing.module';
     CommonModule,
     FlexLayoutModule,
     RouterModule,
+    MatButtonModule,
     ContractRoutingModule,
   ],
 })
