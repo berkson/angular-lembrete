@@ -1,15 +1,24 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Credentials } from 'src/app/authentication';
+import { User } from '../models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpUtilService {
   private _authenticated: boolean;
+  private _user: User = new User();
 
   constructor() {
     this._authenticated = false;
+  }
+
+  public get user(): User {
+    return this._user;
+  }
+  public set user(value: User) {
+    this._user = value;
   }
 
   public get authenticated(): boolean {

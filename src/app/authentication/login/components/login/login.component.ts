@@ -6,6 +6,7 @@ import {
   CpfValidator,
   ErrorMessages,
   MessageService,
+  User,
 } from 'src/app/shared';
 import { HttpUtilService } from 'src/app/shared';
 import { LoginService } from '../../services';
@@ -52,6 +53,8 @@ export class LoginComponent implements OnInit {
     this.loginService.login(credentials).subscribe({
       next: (data) => {
         this.httpUtils.authenticated = data.cpf !== null;
+        this.httpUtils.user = data as User;
+        this.router.navigate(['contract']);
       },
       error: (err) => {
         try {

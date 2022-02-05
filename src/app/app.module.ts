@@ -22,6 +22,7 @@ import {
   HttpXsrfInterceptor,
   XhrInterceptor,
 } from './shared';
+import { ContractModule, ContractRoutingModule } from './contract';
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,6 +36,8 @@ import {
     LoginModule,
     LoginRoutingModule,
     FlexLayoutModule,
+    ContractModule,
+    ContractRoutingModule,
 
     AppRoutingModule,
   ],
