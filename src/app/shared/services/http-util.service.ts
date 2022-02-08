@@ -1,7 +1,9 @@
-import { HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { finalize } from 'rxjs';
 import { Credentials } from 'src/app/authentication';
-import { User } from '../models';
+import { Role, User } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +12,7 @@ export class HttpUtilService {
   private _authenticated: boolean;
   private _user: User = new User();
 
-  constructor() {
+  constructor(private httpClient: HttpClient, private router: Router) {
     this._authenticated = false;
   }
 
@@ -26,6 +28,23 @@ export class HttpUtilService {
   }
   public set authenticated(value: boolean) {
     this._authenticated = value;
+  }
+
+  public getUserRoles(): Array<Role> | undefined {
+    return this._user.roles !== null ? this._user.roles : [];
+  }
+
+  exit() {
+    this.httpClient
+      .post('//localhost:8443/logout', { withCredentials: 'true' })
+      .pipe(
+        finalize(() => {
+          this.authenticated = false;
+          this.user = new User();
+          this.router.navigate(['/']);
+        })
+      )
+      .subscribe();
   }
 
   authHeaders(credentials: Credentials | string) {

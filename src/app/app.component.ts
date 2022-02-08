@@ -63,15 +63,6 @@ export class AppComponent {
   }
 
   exit() {
-    this.httpClient
-      .post('//localhost:8443/logout', { withCredentials: 'true' })
-      .pipe(
-        finalize(() => {
-          this.httpUtils.authenticated = false;
-          this.httpUtils.user = new User();
-          this.router.navigate(['/']);
-        })
-      )
-      .subscribe();
+    this.httpUtils.exit();
   }
 }

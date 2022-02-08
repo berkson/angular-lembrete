@@ -4,6 +4,8 @@ export const ErrorMessages = {
   codeError: 'Código incorreto!',
   passNotEqual: 'Senha e confirmação diferem!',
   sessionExpired: 'Sua sessão expirou, logue novamente!',
+  notAdmin: 'Acesse o sistema como Administrador',
+  resctrict: 'Restrito',
 };
 export const Messages = {
   success: 'Sucesso',

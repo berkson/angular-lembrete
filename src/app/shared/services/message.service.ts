@@ -18,8 +18,11 @@ export class MessageService {
    * Mostra a mensagem na snackbar por 5 segundos
    * @param message mensagem a ser mostrada na snackbar
    */
-  snackErrorMessage(message: string) {
-    this.snack.open(message, ErrorMessages.error, {
+  snackErrorMessage(
+    message: string,
+    buttonMessage: string = ErrorMessages.error
+  ) {
+    this.snack.open(message, buttonMessage, {
       duration: 5000,
       panelClass: ['style-error'],
       verticalPosition: 'top',
@@ -29,9 +32,14 @@ export class MessageService {
   /**
    * Mostra a mensagem na snackbar por 5 segundos
    * @param message mensagem a ser mostrada na snackbar
+   * @param buttonMessage mensagem que aparece no botão ao lado na snackbar. M
+   * ensagem padrão Sucesso
    */
-  snackSuccessMessage(message: string) {
-    this.snack.open(message, Messages.success, {
+  snackSuccessMessage(
+    message: string,
+    buttonMessage: string = Messages.success
+  ) {
+    this.snack.open(message, buttonMessage, {
       duration: 5000,
       verticalPosition: 'top',
     });
