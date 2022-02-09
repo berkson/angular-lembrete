@@ -8,6 +8,8 @@ import { HttpUtilService } from 'src/app/shared';
   styleUrls: ['./listing.component.scss'],
 })
 export class ListingComponent implements OnInit {
+  public readonly url: string = '/contract/register';
+
   constructor(private router: Router, private httpUtils: HttpUtilService) {}
 
   ngOnInit(): void {

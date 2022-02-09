@@ -1,9 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, HostListener } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { HttpUtilService } from './shared/services';
-import { environment as env } from 'src/environments/environment';
-import { filter, finalize } from 'rxjs';
+import { filter } from 'rxjs';
 import { LoginService } from './authentication';
 import { ErrorMessages, MessageService, User } from './shared';
 
@@ -13,19 +11,17 @@ import { ErrorMessages, MessageService, User } from './shared';
   styleUrls: ['./app.component.scss', './app-header.component.scss'],
 })
 export class AppComponent {
+  public static readonly U_KEY: string = 'user';
   constructor(
     private httpUtils: HttpUtilService,
     private router: Router,
-    private httpClient: HttpClient,
     private messageService: MessageService,
     private loginService: LoginService
   ) {
     // Verifica se a aplicação foi reinicializada e procede a verificação da sessão, se está ativa
     // https://stackoverflow.com/questions/56325272/detect-browser-refresh-in-angular-project
-    console.log('construindo app!');
-    if (localStorage.getItem('user') !== null) {
-      let user: User = JSON.parse(localStorage.getItem('user')!);
-      console.log('logando novamente: ' + user);
+    if (localStorage.getItem(AppComponent.U_KEY) !== null) {
+      let user: User = JSON.parse(localStorage.getItem(AppComponent.U_KEY)!);
       this.router.events
         .pipe(filter((rs): rs is NavigationEnd => rs instanceof NavigationEnd))
         .subscribe(
@@ -34,12 +30,15 @@ export class AppComponent {
               try {
                 if (user.auth) {
                   this.httpUtils.user = user;
-                  this.loginService.loginWithCredentialsOrHeader(user.auth);
+                  // this.loginService
+                  //   .loginWithCredentialsOrHeader(user.auth)
+                  //   .subscribe();
                   this.httpUtils.authenticated = user.cpf !== null;
-                  localStorage.removeItem('user');
+                  localStorage.removeItem(AppComponent.U_KEY);
                 }
               } catch (e) {
                 this.messageService.snackErrorMessage(ErrorMessages.tryAgain);
+                this.httpUtils.exit();
               }
             }
           }
@@ -49,13 +48,37 @@ export class AppComponent {
 
   // Salva o usuário no localstorage antes do refresh
   @HostListener('window:beforeunload', ['$event']) unloadHandler(event: Event) {
-    console.log('Processing beforeunload...', this.httpUtils.user);
-    this.processData();
+    //console.log('Processing beforeunload...', this.httpUtils.user);
+    this.processUserData();
   }
 
-  processData() {
+  // Se a página não está visível pode estar abrindo uma nova aba.
+  @HostListener('contextmenu', ['$event']) handleVisibilityChange(
+    event: Event
+  ) {
+    //console.log('Processing context menu...', this.httpUtils.user);
+    this.processHiddenDocument();
+  }
+  processHiddenDocument() {
+    //console.log('habilitando usuário');
+    localStorage.setItem(
+      AppComponent.U_KEY,
+      JSON.stringify(this.httpUtils.user)
+    );
+    this.startCountdown(20);
+  }
+
+  delete() {
+    localStorage.removeItem(AppComponent.U_KEY);
+    //console.log('deletado');
+  }
+
+  processUserData() {
     if (this.httpUtils.user.auth !== undefined)
-      localStorage.setItem('user', JSON.stringify(this.httpUtils.user));
+      localStorage.setItem(
+        AppComponent.U_KEY,
+        JSON.stringify(this.httpUtils.user)
+      );
   }
 
   authenticated(): boolean {
@@ -64,5 +87,18 @@ export class AppComponent {
 
   exit() {
     this.httpUtils.exit();
+  }
+
+  startCountdown(seconds: number) {
+    let counter = seconds;
+
+    const interval = setInterval(() => {
+      counter--;
+      //console.log(counter);
+      if (counter < 0) {
+        clearInterval(interval);
+        this.delete();
+      }
+    }, 1000);
   }
 }

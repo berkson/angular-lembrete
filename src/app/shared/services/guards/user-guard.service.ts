@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
-  Router,
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
@@ -14,11 +13,10 @@ import { MessageService } from '../message.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AdminGuardService implements CanActivate {
+export class UserGuardService implements CanActivate {
   constructor(
     private httpUtil: HttpUtilService,
-    private messageService: MessageService,
-    private router: Router
+    private messageService: MessageService
   ) {}
 
   canActivate(
@@ -32,15 +30,18 @@ export class AdminGuardService implements CanActivate {
     let roles = this.httpUtil.getUserRoles();
     if (roles !== undefined) {
       for (let role of roles) {
-        if (role.authority === 'ROLE_ADMIN') {
+        if (
+          role.authority === 'ROLE_USUARIO' ||
+          role.authority === 'ROLE_ADMIN'
+        ) {
           return true;
         }
       }
       this.messageService.snackErrorMessage(
-        ErrorMessages.notAdmin,
+        ErrorMessages.notUser,
         ErrorMessages.resctrict
       );
-      this.router.navigate(['/contract']);
+      this.httpUtil.exit();
       return false;
     } else {
       this.messageService.snackErrorMessage(ErrorMessages.sessionExpired);

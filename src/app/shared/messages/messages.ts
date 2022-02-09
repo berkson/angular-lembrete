@@ -5,6 +5,7 @@ export const ErrorMessages = {
   passNotEqual: 'Senha e confirmação diferem!',
   sessionExpired: 'Sua sessão expirou, logue novamente!',
   notAdmin: 'Acesse o sistema como Administrador',
+  notUser: 'Somente usuários têm acesso ao sistema',
   resctrict: 'Restrito',
 };
 export const Messages = {
