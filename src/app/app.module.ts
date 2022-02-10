@@ -23,16 +23,21 @@ import {
   XhrInterceptor,
 } from './shared';
 import { ContractModule, ContractRoutingModule } from './contract';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     HttpClientXsrfModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,
+    MatTableModule,
+    MatSortModule,
     LoginModule,
     LoginRoutingModule,
     FlexLayoutModule,
