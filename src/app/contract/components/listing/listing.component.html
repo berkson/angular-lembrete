@@ -1,4 +1,6 @@
-<a mat-button color="warn"> Adicionar lançamento </a>
+<a color="warn" mat-raised-button routerLink="/contract/register">
+  Adicionar Contrato
+</a>
 <mat-table [dataSource]="dataSource" matSort>
   <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: columns"></mat-row>
@@ -24,14 +26,23 @@
       Data Inicial
     </mat-header-cell>
     <mat-cell *matCellDef="let contract">
-      {{ contract.intialDate }}
+      {{ contract.initialDate }}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="final_date">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>
+      Data Final
+    </mat-header-cell>
+    <mat-cell *matCellDef="let contract">
+      {{ contract.finalDate }}
     </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="contract_type">
     <mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </mat-header-cell>
     <mat-cell *matCellDef="let contract">
-      {{ contract.contractType }}
+      {{ contract.contractType.description }}
     </mat-cell>
   </ng-container>
 

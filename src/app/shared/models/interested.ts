@@ -1,4 +1,4 @@
-import { Phone } from "./phone";
+import { Phone } from './phone';
 
 export class Interested {
   constructor(
@@ -6,6 +6,10 @@ export class Interested {
     public cpf?: string,
     public name?: string,
     public email?: string,
-    public phone?: Phone
-    ) {}
+    public phones?: Array<Phone>
+  ) {}
+
+  toJson(): String {
+    return JSON.stringify(this);
+  }
 }

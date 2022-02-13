@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { AppComponent } from 'src/app/app.component';
 import { Credentials } from 'src/app/authentication';
+import { Buffer } from 'buffer';
 import { Role, User } from '../models';
 
 @Injectable({
@@ -70,9 +71,10 @@ export class HttpUtilService {
       return { headers: headers };
     }
     // primeiro login
-    let auth = `Basic ${btoa(
-      credentials.username + ':' + credentials.password
-    )}`;
+    let auth = `Basic ${Buffer.from(
+      credentials.username + ':' + credentials.password,
+      'utf-8'
+    ).toString('base64')}`;
     const headers = new HttpHeaders(credentials ? { Authorization: auth } : {});
 
     return { headers: headers };

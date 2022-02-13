@@ -2,8 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
-import { Contract, HttpUtilService } from 'src/app/shared';
+import { Contract, ContractService, HttpUtilService } from 'src/app/shared';
 
 @Component({
   selector: 'app-listing',
@@ -13,11 +12,13 @@ import { Contract, HttpUtilService } from 'src/app/shared';
 export class ListingComponent implements OnInit {
   dataSource: MatTableDataSource<Contract>;
   columns!: string[];
-  public readonly url: string = '/contract/register';
 
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  constructor(private router: Router, private httpUtils: HttpUtilService) {
+  constructor(
+    private contractService: ContractService,
+    private httpUtils: HttpUtilService
+  ) {
     this.dataSource = new MatTableDataSource();
   }
 
@@ -27,6 +28,7 @@ export class ListingComponent implements OnInit {
         'id',
         'contract_number',
         'initial_date',
+        'final_date',
         'contract_type',
         'company',
       ];
@@ -34,14 +36,32 @@ export class ListingComponent implements OnInit {
       this.columns = [
         'contract_number',
         'initial_date',
+        'final_date',
         'contract_type',
         'company',
       ];
     }
+    this.queryData();
   }
 
-  redirect() {
-    this.router.navigate(['/contract/register']);
+  queryData() {
+    this.contractService
+      .listAllContracts(
+        this.paginator.pageIndex,
+        this.sort.direction,
+        this.sort.active ? this.sort.active : ''
+      )
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+          const contracts = data.content.map((obj: any) =>
+            Contract.fromJson(obj)
+          );
+          this.dataSource.data = contracts;
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+        },
+      });
   }
 
   isAdmin(): boolean {

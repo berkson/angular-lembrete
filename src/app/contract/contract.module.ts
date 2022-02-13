@@ -13,7 +13,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { SharedModule } from '../shared';
+import { ContractService, SharedModule } from '../shared';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [ContractComponent, ListingComponent, RegisterComponent],
@@ -26,8 +27,10 @@ import { SharedModule } from '../shared';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    BrowserAnimationsModule,
     SharedModule,
     ContractRoutingModule,
   ],
+  providers: [ContractService],
 })
 export class ContractModule {}
