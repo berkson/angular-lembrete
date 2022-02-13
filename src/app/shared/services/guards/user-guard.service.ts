@@ -27,6 +27,7 @@ export class UserGuardService implements CanActivate {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
+    this.httpUtil.verifyRefresh();
     let roles = this.httpUtil.getUserRoles();
     if (roles !== undefined) {
       for (let role of roles) {

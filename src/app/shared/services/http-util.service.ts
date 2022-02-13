@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
+import { AppComponent } from 'src/app/app.component';
 import { Credentials } from 'src/app/authentication';
 import { Role, User } from '../models';
 
@@ -34,6 +35,16 @@ export class HttpUtilService {
     return this._user.roles !== null ? this._user.roles : [];
   }
 
+  isAdmin(): boolean {
+    let result: boolean = false;
+    if (this._user.roles !== undefined && this._user.roles !== null) {
+      this._user.roles.forEach((auth) => {
+        if (auth.authority === 'ROLE_ADMIN') result = true;
+      });
+    }
+    return result;
+  }
+
   exit() {
     this.httpClient
       .post('//localhost:8443/logout', { withCredentials: 'true' })
@@ -42,6 +53,9 @@ export class HttpUtilService {
           this.authenticated = false;
           this.user = new User();
           this.router.navigate(['/']);
+          if (localStorage.getItem(AppComponent.U_KEY) !== null) {
+            localStorage.removeItem(AppComponent.U_KEY);
+          }
         })
       )
       .subscribe();
@@ -62,5 +76,11 @@ export class HttpUtilService {
     const headers = new HttpHeaders(credentials ? { Authorization: auth } : {});
 
     return { headers: headers };
+  }
+
+  verifyRefresh() {
+    if (localStorage.getItem(AppComponent.U_KEY) !== null) {
+      this._user = JSON.parse(localStorage.getItem(AppComponent.U_KEY)!);
+    }
   }
 }

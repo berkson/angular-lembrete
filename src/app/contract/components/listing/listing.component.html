@@ -3,17 +3,28 @@
   <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: columns"></mat-row>
 
-  <ng-container matColumnDef="contract_number">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> Número </mat-header-cell>
+  <ng-container *ngIf="isAdmin()" matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
     <mat-cell *matCellDef="let contract">
-      {{ contract.contractNumber}}
+      {{ contract.id }}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="contract_number">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>
+      Número
+    </mat-header-cell>
+    <mat-cell *matCellDef="let contract">
+      {{ contract.contractNumber }}
     </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="initial_date">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> Data Inicial </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header>
+      Data Inicial
+    </mat-header-cell>
     <mat-cell *matCellDef="let contract">
-      {{ contract.intialDate}}
+      {{ contract.intialDate }}
     </mat-cell>
   </ng-container>
 

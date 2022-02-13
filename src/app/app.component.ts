@@ -21,6 +21,7 @@ export class AppComponent {
     // Verifica se a aplicação foi reinicializada e procede a verificação da sessão, se está ativa
     // https://stackoverflow.com/questions/56325272/detect-browser-refresh-in-angular-project
     if (localStorage.getItem(AppComponent.U_KEY) !== null) {
+      //console.log('inicializando aplicação');
       let user: User = JSON.parse(localStorage.getItem(AppComponent.U_KEY)!);
       this.router.events
         .pipe(filter((rs): rs is NavigationEnd => rs instanceof NavigationEnd))
@@ -34,7 +35,7 @@ export class AppComponent {
                   //   .loginWithCredentialsOrHeader(user.auth)
                   //   .subscribe();
                   this.httpUtils.authenticated = user.cpf !== null;
-                  localStorage.removeItem(AppComponent.U_KEY);
+                  this.delete();
                 }
               } catch (e) {
                 this.messageService.snackErrorMessage(ErrorMessages.tryAgain);

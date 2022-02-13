@@ -12,12 +12,7 @@ import { Contract, HttpUtilService } from 'src/app/shared';
 })
 export class ListingComponent implements OnInit {
   dataSource: MatTableDataSource<Contract>;
-  columns: string[] = [
-    'contract_number',
-    'initial_date',
-    'contract_type',
-    'company',
-  ];
+  columns!: string[];
   public readonly url: string = '/contract/register';
 
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
@@ -27,10 +22,29 @@ export class ListingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('usuário logado: ' + JSON.stringify(this.httpUtils.user));
+    if (this.isAdmin()) {
+      this.columns = [
+        'id',
+        'contract_number',
+        'initial_date',
+        'contract_type',
+        'company',
+      ];
+    } else {
+      this.columns = [
+        'contract_number',
+        'initial_date',
+        'contract_type',
+        'company',
+      ];
+    }
   }
 
   redirect() {
     this.router.navigate(['/contract/register']);
+  }
+
+  isAdmin(): boolean {
+    return this.httpUtils.isAdmin();
   }
 }
