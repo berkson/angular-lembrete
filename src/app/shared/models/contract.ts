@@ -25,16 +25,27 @@ export class Contract {
       }`;
   }
 
-  static fromJson(jsonString: any): Contract {
-    let jsonObject = jsonString;
+  /**
+   * Converte um ojeto contrato com as propriedades json em
+   * um contrato com as propriedades padrão.
+   * @param object objeto de resposta do backend.
+   * @returns um contrato.
+   */
+  static fromObject(object: any): Contract {
     let contract = new Contract(
-      jsonObject.id,
-      jsonObject.contract_number,
-      jsonObject.company,
-      jsonObject.initial_date,
-      jsonObject.final_date,
-      ContractType.fromJson(JSON.stringify(jsonObject.contract_type)),
-      jsonObject.interested_list
+      object.id,
+      object.contract_number,
+      object.company,
+      object.initial_date,
+      object.final_date,
+      new ContractType(
+        object.contract_type.id,
+        object.contract_type.code,
+        object.contract_type.description,
+        object.contract_type.max_validity
+      ),
+      //ContractType.fromJson(JSON.stringify(jsonObject.contract_type)),
+      object.interested_list
     );
 
     return contract;

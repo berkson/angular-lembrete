@@ -55,7 +55,7 @@ export class ListingComponent implements OnInit {
         next: (data) => {
           console.log(data);
           const contracts = data.content.map((obj: any) =>
-            Contract.fromJson(obj)
+            Contract.fromObject(obj)
           );
           this.dataSource.data = contracts;
           this.dataSource.sort = this.sort;
