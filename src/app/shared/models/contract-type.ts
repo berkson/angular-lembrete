@@ -15,14 +15,12 @@ export class ContractType {
     }`;
   }
 
-  static fromJson(jsonString: string): ContractType {
-    let jsonObject = JSON.parse(jsonString);
-    let contractType = new ContractType(
-      jsonObject.id,
-      jsonObject.code,
-      jsonObject.description,
-      jsonObject.max_validity
+  static fromObject(object: any): ContractType {
+    return new ContractType(
+      object.id,
+      object.code,
+      object.description,
+      object.max_validity
     );
-    return contractType;
   }
 }

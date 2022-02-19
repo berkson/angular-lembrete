@@ -32,22 +32,14 @@ export class Contract {
    * @returns um contrato.
    */
   static fromObject(object: any): Contract {
-    let contract = new Contract(
+    return new Contract(
       object.id,
       object.contract_number,
       object.company,
       object.initial_date,
       object.final_date,
-      new ContractType(
-        object.contract_type.id,
-        object.contract_type.code,
-        object.contract_type.description,
-        object.contract_type.max_validity
-      ),
-      //ContractType.fromJson(JSON.stringify(jsonObject.contract_type)),
+      ContractType.fromObject(object.contract_type),
       object.interested_list
     );
-
-    return contract;
   }
 }
