@@ -13,12 +13,14 @@ import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { ContractService, SharedModule } from '../shared';
+import { ContractService, ContractTypeService, SharedModule } from '../shared';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [ContractComponent, ListingComponent, RegisterComponent],
@@ -34,11 +36,13 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
+    MatOptionModule,
+    MatSelectModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     SharedModule,
     ContractRoutingModule,
   ],
-  providers: [ContractService],
+  providers: [ContractService, ContractTypeService],
 })
 export class ContractModule {}

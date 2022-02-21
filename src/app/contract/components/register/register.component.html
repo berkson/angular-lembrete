@@ -14,9 +14,6 @@
         <mat-form-field>
           <input matInput placeholder="Empresa" formControlName="company" />
         </mat-form-field>
-        <span matTooltip="Senha deve conter ao menos 6 caracteres">
-          <mat-icon>help</mat-icon>
-        </span>
       </mat-list-item>
       <mat-list-item>
         <mat-form-field>
@@ -26,7 +23,7 @@
             formControlName="initialDate"
           />
         </mat-form-field>
-        <span matTooltip="Senha deve conter ao menos 6 caracteres">
+        <span matTooltip="Data de início do contrato">
           <mat-icon>help</mat-icon>
         </span>
       </mat-list-item>
@@ -38,21 +35,19 @@
             formControlName="finalDate"
           />
         </mat-form-field>
-        <span matTooltip="Senha deve conter ao menos 6 caracteres">
+        <span matTooltip="duração do contrato em meses">
           <mat-icon>help</mat-icon>
         </span>
       </mat-list-item>
       <mat-list-item>
-        <mat-form-field>
-          <input
-            matInput
-            placeholder="Tipo de contrato"
-            formControlName="contractType"
-          />
+        <mat-form-field appearance="standard">
+          <mat-label>Tipo de Contrato</mat-label>
+          <mat-select formControlName="contractType">
+            <mat-option *ngFor="let type of types" [value]="type">
+              {{ type.description }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
-        <span matTooltip="Senha deve conter ao menos 6 caracteres">
-          <mat-icon>help</mat-icon>
-        </span>
       </mat-list-item>
       <mat-list-item fxLayoutAlign="center">
         <button
@@ -61,7 +56,7 @@
           color="primary"
           [disabled]="registerForm.invalid"
         >
-          Entrar
+          Salvar
         </button>
       </mat-list-item>
     </mat-list>
