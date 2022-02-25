@@ -33,8 +33,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [],
-            "allowedCommonJsDependencies": ["buffer"]
+            "scripts": []
           },
           "configurations": {
             "production": {
