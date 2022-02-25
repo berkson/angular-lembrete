@@ -21,6 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [ContractComponent, ListingComponent, RegisterComponent],
@@ -38,6 +39,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatIconModule,
     MatOptionModule,
     MatSelectModule,
+    MatDatepickerModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     SharedModule,

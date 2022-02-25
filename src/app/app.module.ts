@@ -25,6 +25,11 @@ import {
 import { ContractModule, ContractRoutingModule } from './contract';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import {
+  MatMomentDateModule,
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+} from '@angular/material-moment-adapter';
+import { MatDatepickerIntl } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [AppComponent],
@@ -43,6 +48,7 @@ import { MatSortModule } from '@angular/material/sort';
     FlexLayoutModule,
     ContractModule,
     ContractRoutingModule,
+    MatMomentDateModule,
 
     AppRoutingModule,
   ],
@@ -56,6 +62,8 @@ import { MatSortModule } from '@angular/material/sort';
     { provide: HttpXsrfTokenExtractor, useClass: HttpXsrfCookieExtractor },
     { provide: XSRF_COOKIE_NAME, useValue: 'XSRF-TOKEN' },
     { provide: XSRF_HEADER_NAME, useValue: 'X-XSRF-TOKEN' },
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { strict: true } },
+    // {provide: MatDatepickerIntl, useClass: MyIntl}
   ],
   bootstrap: [AppComponent],
 })
