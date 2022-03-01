@@ -29,7 +29,9 @@ import {
   MatMomentDateModule,
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
 } from '@angular/material-moment-adapter';
-import { MatDatepickerIntl } from '@angular/material/datepicker';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { PtBrMatPaginatorIntl } from './shared/intl';
 
 @NgModule({
   declarations: [AppComponent],
@@ -63,7 +65,8 @@ import { MatDatepickerIntl } from '@angular/material/datepicker';
     { provide: XSRF_COOKIE_NAME, useValue: 'XSRF-TOKEN' },
     { provide: XSRF_HEADER_NAME, useValue: 'X-XSRF-TOKEN' },
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { strict: true } },
-    // {provide: MatDatepickerIntl, useClass: MyIntl}
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    { provide: MatPaginatorIntl, useClass: PtBrMatPaginatorIntl },
   ],
   bootstrap: [AppComponent],
 })
