@@ -22,6 +22,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [ContractComponent, ListingComponent, RegisterComponent],
@@ -43,6 +44,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     SharedModule,
+    MatTooltipModule,
     ContractRoutingModule,
   ],
   providers: [ContractService, ContractTypeService],

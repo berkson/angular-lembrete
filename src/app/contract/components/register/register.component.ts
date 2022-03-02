@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ContractType, ContractTypeService } from 'src/app/shared';
+import {
+  CnpjValidator,
+  ContractType,
+  ContractTypeService,
+  CpfValidator,
+} from 'src/app/shared';
 import * as moment from 'moment';
 
 @Component({
@@ -32,14 +37,39 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  get interested() {
+    return this.registerForm.get('interested') as FormArray;
+  }
+
+  addInterested() {
+    this.interested.push(
+      this.fb.group({
+        cpf: ['', [CpfValidator]],
+        name: ['', [Validators.min(3)]],
+        email: ['', [Validators.email]],
+        phones: this.fb.array([this.fb.control('')]),
+      })
+    );
+  }
+
   createForm() {
     this.registerForm = this.fb.group({
       contractNumber: ['', [Validators.required]],
-      company: ['', [Validators.required]],
+      company: this.fb.group({
+        cnpj: ['', [CnpjValidator]],
+        name: ['', [Validators.min(5)]],
+      }),
       initialDate: ['', [Validators.required]],
-      finalDate: ['', [Validators.required]],
+      finalDate: ['', [Validators.required, Validators.max(60)]],
       contractType: ['', [Validators.required]],
-      // TODO: dynamic add an interested.
+      interested: this.fb.array([
+        this.fb.group({
+          cpf: ['', [CpfValidator]],
+          name: ['', [Validators.min(3)]],
+          email: ['', [Validators.email]],
+          phones: this.fb.array([this.fb.control('')]),
+        }),
+      ]),
     });
   }
 

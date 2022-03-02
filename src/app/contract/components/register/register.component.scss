@@ -1,7 +1,9 @@
+@use "sass:math";
+
 $screen-size: 100vh;
 
 .mat-list-item {
-  padding: $screen-size/35 !important;
+  padding: math.div($screen-size, 35) !important;
 }
 .mat-form-field {
   width: 100%;
