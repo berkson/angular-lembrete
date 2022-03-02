@@ -15,7 +15,9 @@ import * as moment from 'moment';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  registerForm: FormGroup = new FormGroup({});
+  basicForm: FormGroup = new FormGroup({});
+  companyForm: FormGroup = new FormGroup({});
+  contactForm: FormGroup = new FormGroup({});
   types: Array<ContractType> = [];
 
   constructor(
@@ -38,7 +40,7 @@ export class RegisterComponent implements OnInit {
   }
 
   get interested() {
-    return this.registerForm.get('interested') as FormArray;
+    return this.contactForm.get('interested') as FormArray;
   }
 
   addInterested() {
@@ -53,15 +55,11 @@ export class RegisterComponent implements OnInit {
   }
 
   createForm() {
-    this.registerForm = this.fb.group({
-      contractNumber: ['', [Validators.required]],
-      company: this.fb.group({
-        cnpj: ['', [CnpjValidator]],
-        name: ['', [Validators.min(5)]],
-      }),
-      initialDate: ['', [Validators.required]],
-      finalDate: ['', [Validators.required, Validators.max(60)]],
-      contractType: ['', [Validators.required]],
+    this.companyForm = this.fb.group({
+      cnpj: ['', [CnpjValidator]],
+      name: ['', [Validators.min(5)]],
+    });
+    this.contactForm = this.fb.group({
       interested: this.fb.array([
         this.fb.group({
           cpf: ['', [CpfValidator]],
@@ -71,14 +69,20 @@ export class RegisterComponent implements OnInit {
         }),
       ]),
     });
+    this.basicForm = this.fb.group({
+      contractNumber: ['', [Validators.required]],
+      initialDate: ['', [Validators.required]],
+      finalDate: ['', [Validators.required, Validators.max(60)]],
+      contractType: ['', [Validators.required]],
+    });
   }
 
   register() {
     let finalDate = moment(
-      this.registerForm.get('initialDate')?.value,
+      this.basicForm.get('initialDate')?.value,
       'DD/MM/YYYY'
-    ).add(this.registerForm.get('finalDate')?.value, 'months');
-    this.registerForm.patchValue({ finalDate: finalDate.format('YYYY-MM-DD') });
-    console.log(this.registerForm.value);
+    ).add(this.basicForm.get('finalDate')?.value, 'months');
+    this.basicForm.patchValue({ finalDate: finalDate.format('YYYY-MM-DD') });
+    console.log(this.basicForm.value);
   }
 }

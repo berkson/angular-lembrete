@@ -1,4 +1,100 @@
-<div class="cadcontract-div" fxflex fxLayout="row" fxLayoutAlign.xs="baseline center" fxLayoutAlign.lg="center center"
+<mat-stepper orientation="vertical" #stepper>
+  <mat-step [stepControl]="basicForm">
+    <form [formGroup]="basicForm">
+      <ng-template matStepLabel>Informações Basicas</ng-template>
+      <mat-form-field appearance="fill">
+        <mat-label>Contrato</mat-label>
+        <input matInput placeholder="Contrato" formControlName="contractNumber" required>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Data Inicial</mat-label>
+        <input matInput [matDatepicker]="picker" readonly="readonly" formControlName="initialDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker touchUi="true" #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Tempo de contrato (Meses)</mat-label>
+        <input matInput type="number" max="60" placeholder="Tempo de contrato (Meses)" formControlName="finalDate"
+          autocomplete="off" />
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Tipo de Contrato</mat-label>
+        <mat-select formControlName="contractType">
+          <mat-option *ngFor="let type of types" [value]="type">
+            {{ type.description }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperNext>Próximo</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="companyForm">
+    <form [formGroup]="companyForm">
+      <ng-template matStepLabel>Informações da Empresa</ng-template>
+      <mat-form-field appearance="fill">
+        <mat-label>CNPJ</mat-label>
+        <input matInput mask="99.999.999/9999-99" formControlName="cnpj" />
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="name" />
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Voltar</button>
+        <button mat-button matStepperNext>Próximo</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="contactForm">
+    <form [formGroup]="contactForm">
+      <ng-template matStepLabel>Contato dos Interessados</ng-template>
+      <div class="contacts" formArrayName="interested">
+        <button type="button" mat-raised-button color="primary" (click)="addInterested()">+ Acrescentar
+          Interessado</button>
+        <div *ngFor="let item of interested.controls; let i=index">
+          <mat-card>Interessado - {{i+1}}</mat-card>
+          <div [formGroupName]="i">
+            <mat-list-item>
+              <mat-form-field appearance="fill">
+                <mat-label>CPF</mat-label>
+                <input matInput formControlName="cpf" />
+              </mat-form-field>
+            </mat-list-item>
+            <mat-list-item>
+              <mat-form-field appearance="fill">
+                <mat-label>Nome</mat-label>
+                <input matInput formControlName="name" />
+              </mat-form-field>
+            </mat-list-item>
+            <mat-list-item>
+              <mat-form-field appearance="fill">
+                <mat-label>email</mat-label>
+                <input matInput formControlName="email" />
+              </mat-form-field>
+            </mat-list-item>
+          </div>
+        </div>
+      </div>
+      <div>
+        <button mat-button matStepperPrevious>Voltar</button>
+        <button mat-button matStepperNext>Próximo</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Concluído</ng-template>
+    <p>Preenchimento concluído.</p>
+    <div>
+      <button mat-button matStepperPrevious>Voltar</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-stepper>
+
+
+<!-- <div class="cadcontract-div" fxflex fxLayout="row" fxLayoutAlign.xs="baseline center" fxLayoutAlign.lg="center center"
   fxLayoutAlign.gt-xs="center center" fxLayoutAlign.xl="center center" fxLayoutAlign.md="center center">
   <form [formGroup]="registerForm" (submit)="register()" novalidate>
     <mat-list>
@@ -76,4 +172,4 @@
       </mat-list-item>
     </mat-list>
   </form>
-</div>
+</div> -->

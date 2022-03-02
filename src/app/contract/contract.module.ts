@@ -22,7 +22,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatStepperModule } from '@angular/material/stepper';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [ContractComponent, ListingComponent, RegisterComponent],
@@ -44,9 +46,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     SharedModule,
-    MatTooltipModule,
+    MatStepperModule,
+    MatCardModule,
     ContractRoutingModule,
   ],
-  providers: [ContractService, ContractTypeService],
+  providers: [
+    ContractService,
+    ContractTypeService,
+    { provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } },
+  ],
 })
 export class ContractModule {}

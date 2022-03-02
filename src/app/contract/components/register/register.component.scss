@@ -1,10 +1,61 @@
 @use "sass:math";
 
-$screen-size: 100vh;
+$screen-heigth: 100vh;
+$screen-width: 100vw;
 
-.mat-list-item {
-  padding: math.div($screen-size, 35) !important;
-}
 .mat-form-field {
   width: 100%;
+  margin-top: 16px;
+}
+
+.mat-stepper-vertical {
+  margin-top: 8px;
+  width: 30%;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.contacts {
+  padding: 10px;
+}
+
+.mat-card {
+  margin-top: 15px;
+  text-align: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+@media only screen and (max-width: 1920px) {
+  .mat-stepper-vertical {
+    position: relative;
+    left: math.div($screen-width, 5);
+    margin-top: 8px;
+    width: 50%;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .mat-stepper-vertical {
+    position: relative;
+    left: math.div($screen-width, 5);
+    margin-top: 8px;
+    width: 50%;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .mat-stepper-vertical {
+    position: relative;
+    left: math.div($screen-width, 5);
+    margin-top: 8px;
+    width: 50%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .mat-stepper-vertical {
+    position: relative;
+    left: 0;
+    margin-top: 8px;
+    width: 100%;
+  }
 }
