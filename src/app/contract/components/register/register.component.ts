@@ -27,7 +27,7 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.createForm();
+    this.createForms();
     this.getTypes();
   }
   getTypes() {
@@ -43,6 +43,10 @@ export class RegisterComponent implements OnInit {
     return this.contactForm.get('interested') as FormArray;
   }
 
+  get interestedSize() {
+    return this.interested.length;
+  }
+
   addInterested() {
     this.interested.push(
       this.fb.group({
@@ -54,7 +58,28 @@ export class RegisterComponent implements OnInit {
     );
   }
 
-  createForm() {
+  removeInterested(index: number) {
+    this.interested.removeAt(index);
+  }
+
+  interestedPhones(index: number) {
+    return this.interested.at(index).get('phones') as FormArray;
+  }
+
+  interestedPhonesSize(index: number) {
+    return this.interestedPhones(index).length;
+  }
+
+  addPhone(index: number) {
+    this.interestedPhones(index).push(this.fb.control(''));
+  }
+
+  removePhone(index: number) {
+    let size = this.interestedPhonesSize(index);
+    if (size > 1) this.interestedPhones(index).removeAt(size - 1);
+  }
+
+  createForms() {
     this.companyForm = this.fb.group({
       cnpj: ['', [CnpjValidator]],
       name: ['', [Validators.min(5)]],

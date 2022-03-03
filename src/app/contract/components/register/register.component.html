@@ -53,9 +53,15 @@
       <div class="contacts" formArrayName="interested">
         <button type="button" mat-raised-button color="primary" (click)="addInterested()">+ Acrescentar
           Interessado</button>
-        <div *ngFor="let item of interested.controls; let i=index">
-          <mat-card>Interessado - {{i+1}}</mat-card>
-          <div [formGroupName]="i">
+        <div *ngFor="let item of interested.controls; let interestedInd=index">
+          <mat-card>
+            <mat-card-subtitle>Interessado - {{interestedInd+1}}</mat-card-subtitle>
+            <mat-card-actions>
+              <button type="button" mat-raised-button color="primary" [fxShow]="interestedSize > 1"
+                (click)="removeInterested(interestedInd)">- remover</button>
+            </mat-card-actions>
+          </mat-card>
+          <div [formGroupName]="interestedInd">
             <mat-list-item>
               <mat-form-field appearance="fill">
                 <mat-label>CPF</mat-label>
@@ -74,6 +80,20 @@
                 <input matInput formControlName="email" />
               </mat-form-field>
             </mat-list-item>
+            <div class="phones" formArrayName="phones">
+              <button class="phone_action" type="button" mat-raised-button color="primary"
+                (click)="addPhone(interestedInd)">+ Tel</button>
+              <button class="phone_action" [fxShow]="interestedPhonesSize(interestedInd) > 1" type="button"
+                mat-raised-button color="primary" (click)="removePhone(interestedInd)">- Tel</button>
+              <div *ngFor="let phone of interestedPhones(interestedInd).controls; let phoneInd=index">
+                <mat-list-item>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Tel {{phoneInd + 1}}</mat-label>
+                    <input matInput [formControlName]="phoneInd" />
+                  </mat-form-field>
+                </mat-list-item>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -92,84 +112,3 @@
     </div>
   </mat-step>
 </mat-stepper>
-
-
-<!-- <div class="cadcontract-div" fxflex fxLayout="row" fxLayoutAlign.xs="baseline center" fxLayoutAlign.lg="center center"
-  fxLayoutAlign.gt-xs="center center" fxLayoutAlign.xl="center center" fxLayoutAlign.md="center center">
-  <form [formGroup]="registerForm" (submit)="register()" novalidate>
-    <mat-list>
-      <mat-list-item>
-        <mat-form-field>
-          <input matInput placeholder="Contrato" formControlName="contractNumber" />
-        </mat-form-field>
-      </mat-list-item>
-      <mat-list-item>
-        <mat-form-field formGroupName="company">
-          <input matInput placeholder="CNPJ Empresa" mask="99.999.999/9999-99" formControlName="cnpj" />
-        </mat-form-field>
-      </mat-list-item>
-      <mat-list-item>
-        <mat-form-field formGroupName="company">
-          <input matInput placeholder="Nome Empresa" formControlName="name" />
-        </mat-form-field>
-      </mat-list-item>
-      <mat-list-item>
-        <mat-form-field appearance="fill">
-          <mat-label>Data Inicial</mat-label>
-          <input matInput [matDatepicker]="picker" readonly="readonly" formControlName="initialDate">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker touchUi="true" #picker></mat-datepicker>
-        </mat-form-field>
-      </mat-list-item>
-      <mat-list-item>
-        <mat-form-field>
-          <input matInput type="number" max="60" placeholder="Tempo de contrato (Meses)" formControlName="finalDate"
-            autocomplete="off" />
-        </mat-form-field>
-        <span matTooltip="duração do contrato em meses">
-          <mat-icon>help</mat-icon>
-        </span>
-      </mat-list-item>
-      <mat-list-item>
-        <mat-form-field appearance="standard">
-          <mat-label>Tipo de Contrato</mat-label>
-          <mat-select formControlName="contractType">
-            <mat-option *ngFor="let type of types" [value]="type">
-              {{ type.description }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </mat-list-item>
-      <div formArrayName="interested">
-        <button type="button" mat-raised-button color="primary" (click)="addInterested()">+ Acrescentar
-          Interessado</button>
-        <div *ngFor="let item of interested.controls; let i=index">
-          <h4>Interessado - {{i+1}}</h4>
-          <div [formGroupName]="i">
-            <mat-list-item>
-              <mat-form-field>
-                <input matInput placeholder="CPF" formControlName="cpf" />
-              </mat-form-field>
-            </mat-list-item>
-            <mat-list-item>
-              <mat-form-field>
-                <input matInput placeholder="Nome" formControlName="name" />
-              </mat-form-field>
-            </mat-list-item>
-            <mat-list-item>
-              <mat-form-field>
-                <input matInput placeholder="email" formControlName="email" />
-              </mat-form-field>
-            </mat-list-item>
-          </div>
-        </div>
-      </div>
-      <mat-list-item fxflex fxLayout="row" fxLayoutAlign.xs="baseline center" fxLayoutAlign.lg="center center"
-        fxLayoutAlign.gt-xs="center center" fxLayoutAlign.xl="center center" fxLayoutAlign.md="center center">
-        <button type="submit" mat-raised-button color="primary" [disabled]="registerForm.invalid">
-          Salvar
-        </button>
-      </mat-list-item>
-    </mat-list>
-  </form>
-</div> -->

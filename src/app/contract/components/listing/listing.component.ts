@@ -53,7 +53,7 @@ export class ListingComponent implements OnInit {
       )
       .subscribe({
         next: (data) => {
-          console.log(data);
+          //console.log(data);
           const contracts = data.content.map((obj: any) =>
             Contract.fromObject(obj)
           );
