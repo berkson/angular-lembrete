@@ -1,7 +1,7 @@
-import { Cnpj.Validator } from './cnpj.validator';
+import { CnpjValidator } from './cnpj.validator';
 
-describe('Cnpj.Validator', () => {
+describe('CnpjValidator', () => {
   it('should create an instance', () => {
-    expect(new Cnpj.Validator()).toBeTruthy();
+    expect(new CnpjValidator()).toBeTruthy();
   });
 });

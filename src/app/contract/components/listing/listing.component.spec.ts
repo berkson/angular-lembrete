@@ -1,5 +1,10 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatListModule } from '@angular/material/list';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -14,7 +19,14 @@ describe('ListingComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ListingComponent],
-      imports: [RouterTestingModule.withRoutes([]), HttpClientModule],
+      imports: [
+        RouterTestingModule.withRoutes([]),
+        HttpClientModule,
+        MatPaginatorModule,
+        MatTableModule,
+        BrowserAnimationsModule,
+        MatSortModule,
+      ],
     }).compileComponents();
   });
 
