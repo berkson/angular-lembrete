@@ -3,9 +3,12 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   CnpjValidator,
+  Company,
+  Contract,
   ContractType,
   ContractTypeService,
   CpfValidator,
+  Interested,
 } from 'src/app/shared';
 import * as moment from 'moment';
 
@@ -19,12 +22,15 @@ export class RegisterComponent implements OnInit {
   companyForm: FormGroup = new FormGroup({});
   contactForm: FormGroup = new FormGroup({});
   types: Array<ContractType> = [];
+  contract: Contract;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private cotractTypeService: ContractTypeService
-  ) {}
+  ) {
+    this.contract = new Contract();
+  }
 
   ngOnInit(): void {
     this.createForms();
@@ -33,7 +39,7 @@ export class RegisterComponent implements OnInit {
   getTypes() {
     this.cotractTypeService.getAllContractTypes().subscribe({
       next: (data) => {
-        console.log(data);
+        //console.log(data);
         this.types = data.contract_types;
       },
     });
@@ -102,12 +108,49 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  register() {
-    let finalDate = moment(
+  private treatAndAddDates() {
+    let baseDate = moment(
       this.basicForm.get('initialDate')?.value,
       'DD/MM/YYYY'
-    ).add(this.basicForm.get('finalDate')?.value, 'months');
-    this.basicForm.patchValue({ finalDate: finalDate.format('YYYY-MM-DD') });
-    console.log(this.basicForm.value);
+    );
+    this.contract.initialDate = baseDate.format('YYYY-MM-DD');
+    this.contract.finalDate = baseDate
+      .add(this.basicForm.get('finalDate')?.value, 'months')
+      .format('YYYY-MM-DD');
+  }
+
+  private AddBasicInfo() {
+    this.contract.contractNumber = this.basicForm.get('contractNumber')?.value;
+    this.contract.contractType = this.basicForm.get('contractType')?.value;
+  }
+
+  private AddCompanyInfo() {
+    this.contract.company = new Company(
+      undefined,
+      this.companyForm.get('cnpj')?.value,
+      this.companyForm.get('name')?.value
+    );
+  }
+
+  private AddInterested() {
+    this.contract.interested = [];
+    this.interested.controls.forEach((c) => {
+      let person = new Interested(
+        undefined,
+        c.value.cpf,
+        c.value.name,
+        c.value.email,
+        c.value.phones
+      );
+      this.contract.interested?.push(person);
+    });
+  }
+
+  register() {
+    this.treatAndAddDates();
+    this.AddBasicInfo();
+    this.AddCompanyInfo();
+    this.AddInterested();
+    console.log(this.contract);
   }
 }
