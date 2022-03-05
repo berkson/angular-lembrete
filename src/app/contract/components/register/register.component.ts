@@ -5,6 +5,7 @@ import {
   CnpjValidator,
   Company,
   Contract,
+  ContractService,
   ContractType,
   ContractTypeService,
   CpfValidator,
@@ -27,7 +28,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private cotractTypeService: ContractTypeService
+    private cotractTypeService: ContractTypeService,
+    private contractService: ContractService
   ) {
     this.contract = new Contract();
   }
@@ -126,7 +128,7 @@ export class RegisterComponent implements OnInit {
 
   private AddCompanyInfo() {
     this.contract.company = new Company(
-      undefined,
+      0,
       this.companyForm.get('cnpj')?.value,
       this.companyForm.get('name')?.value
     );
@@ -136,7 +138,7 @@ export class RegisterComponent implements OnInit {
     this.contract.interested = [];
     this.interested.controls.forEach((c) => {
       let person = new Interested(
-        undefined,
+        0,
         c.value.cpf,
         c.value.name,
         c.value.email,
@@ -151,6 +153,13 @@ export class RegisterComponent implements OnInit {
     this.AddBasicInfo();
     this.AddCompanyInfo();
     this.AddInterested();
-    console.log(this.contract);
+    if (
+      !this.basicForm.valid ||
+      !this.companyForm.valid ||
+      !this.contactForm.valid
+    )
+      return;
+
+    this.contractService.registerContract(this.contract); // continuar daqui
   }
 }

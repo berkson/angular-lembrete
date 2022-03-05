@@ -9,8 +9,11 @@ import { Contract } from '../models';
   providedIn: 'root',
 })
 export class ContractService {
-  public static readonly CONTRACTS_PATH: string =
-    env.baseApiHOff + 'contract/all';
+  public static readonly CONTRACTS_PATH: string = env.baseApiHOff + 'contract';
+  public static readonly CONTRACTSLIST_PATH: string =
+    env.baseApiHOff + `${ContractService.CONTRACTS_PATH}/all`;
+  public static readonly NEWCONTRACT_PATH: string =
+    env.baseApiHOff + `${ContractService.CONTRACTS_PATH}/new`;
 
   constructor(
     private httpClient: HttpClient,
@@ -23,10 +26,20 @@ export class ContractService {
     order: string
   ): Observable<any> {
     let url =
-      ContractService.CONTRACTS_PATH +
+      ContractService.CONTRACTSLIST_PATH +
       this.mountPageParams(page, direction, order);
     return this.httpClient.get(
       url,
+      this.httpUtils.user.auth
+        ? this.httpUtils.authHeaders(this.httpUtils.user.auth)
+        : {}
+    );
+  }
+
+  registerContract(contract: Contract): Observable<any> {
+    return this.httpClient.post(
+      ContractService.NEWCONTRACT_PATH,
+      contract,
       this.httpUtils.user.auth
         ? this.httpUtils.authHeaders(this.httpUtils.user.auth)
         : {}
