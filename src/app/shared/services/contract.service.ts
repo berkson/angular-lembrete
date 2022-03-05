@@ -10,10 +10,8 @@ import { Contract } from '../models';
 })
 export class ContractService {
   public static readonly CONTRACTS_PATH: string = env.baseApiHOff + 'contract';
-  public static readonly CONTRACTSLIST_PATH: string =
-    env.baseApiHOff + `${ContractService.CONTRACTS_PATH}/all`;
-  public static readonly NEWCONTRACT_PATH: string =
-    env.baseApiHOff + `${ContractService.CONTRACTS_PATH}/new`;
+  public static readonly CONTRACTSLIST_PATH: string = `${ContractService.CONTRACTS_PATH}/all`;
+  public static readonly NEWCONTRACT_PATH: string = `${ContractService.CONTRACTS_PATH}/new`;
 
   constructor(
     private httpClient: HttpClient,

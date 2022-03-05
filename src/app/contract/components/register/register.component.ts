@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
@@ -10,8 +10,11 @@ import {
   ContractTypeService,
   CpfValidator,
   Interested,
+  Messages,
+  MessageService,
 } from 'src/app/shared';
 import * as moment from 'moment';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -24,14 +27,20 @@ export class RegisterComponent implements OnInit {
   contactForm: FormGroup = new FormGroup({});
   types: Array<ContractType> = [];
   contract: Contract;
+  _show: boolean;
+  _maxValidity: number;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private cotractTypeService: ContractTypeService,
-    private contractService: ContractService
+    private contractService: ContractService,
+    private messageService: MessageService,
+    private ref: ChangeDetectorRef
   ) {
     this.contract = new Contract();
+    this._show = false;
+    this._maxValidity = 0;
   }
 
   ngOnInit(): void {
@@ -45,6 +54,30 @@ export class RegisterComponent implements OnInit {
         this.types = data.contract_types;
       },
     });
+  }
+
+  get maxValidity() {
+    return this._maxValidity;
+  }
+
+  get showContractTime() {
+    return this._show;
+  }
+
+  /**
+   * Mostra o campo de tempo de contrato e seta o valor máximo desse campo
+   * @param event evento de seleção
+   */
+  typeSelected(event?: any): void {
+    if (event.value !== undefined) {
+      this._show = true;
+      this._maxValidity = event.value.max_validity;
+      this.ref.detectChanges();
+    } else {
+      this._show = false;
+      this._maxValidity = 0;
+      this.ref.detectChanges();
+    }
   }
 
   get interested() {
@@ -157,9 +190,27 @@ export class RegisterComponent implements OnInit {
       !this.basicForm.valid ||
       !this.companyForm.valid ||
       !this.contactForm.valid
-    )
+    ) {
       return;
-
-    this.contractService.registerContract(this.contract); // continuar daqui
+    }
+    console.log(JSON.stringify(this.contract)); // ajeitar o json compatibilizar com api
+    // this.contractService
+    //   .registerContract(this.contract)
+    //   .pipe(
+    //     map((response) => {
+    //       if (response.status == 200) {
+    //         this.messageService.snackSuccessMessage(
+    //           Messages.registerContractSuccess
+    //         );
+    //         this.router.navigate(['/contract']);
+    //       }
+    //     })
+    //   )
+    //   .subscribe({
+    //     error: (err) => {
+    //       console.log('Erros' + err.error.errors);
+    //       console.log(err);
+    //     },
+    //   });
   }
 }

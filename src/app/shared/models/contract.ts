@@ -13,7 +13,7 @@ export class Contract {
     public interested?: Array<Interested>
   ) {}
 
-  toJson(): string {
+  toString(): string {
     return `{
         "id": ${this.id},
         "contract_number": ${this.contractNumber},
