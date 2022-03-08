@@ -61,6 +61,7 @@ export class HttpUtilService {
       .subscribe();
   }
 
+  // melhorar esse método para que ele inclua cabeçalho content-type json
   authHeaders(credentials: Credentials | string) {
     // usuário já está logado
     if (typeof credentials === 'string') {

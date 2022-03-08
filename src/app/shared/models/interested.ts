@@ -9,7 +9,4 @@ export class Interested {
     public phones?: Array<Phone>
   ) {}
 
-  toJson(): String {
-    return JSON.stringify(this);
-  }
 }

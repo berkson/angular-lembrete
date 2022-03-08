@@ -6,12 +6,12 @@ export class ContractType {
     public maxValidity?: number
   ) {}
 
-  toJson(): string {
+  toJSON() {
     return `{
-        "id":${this.id},
-        "code":${this.code},
-        "description":${this.description},
-        "max_validity":${this.maxValidity}
+      id: ${this.id},
+      code: ${this.code},
+      description: ${this.description},
+      max_validity: ${this.maxValidity}
     }`;
   }
 

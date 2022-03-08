@@ -37,7 +37,7 @@ export class ContractService {
   registerContract(contract: Contract): Observable<any> {
     return this.httpClient.post(
       ContractService.NEWCONTRACT_PATH,
-      contract,
+      JSON.stringify(contract),
       this.httpUtils.user.auth
         ? this.httpUtils.authHeaders(this.httpUtils.user.auth)
         : {}

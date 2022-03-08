@@ -193,24 +193,24 @@ export class RegisterComponent implements OnInit {
     ) {
       return;
     }
-    console.log(JSON.stringify(this.contract)); // ajeitar o json compatibilizar com api
-    // this.contractService
-    //   .registerContract(this.contract)
-    //   .pipe(
-    //     map((response) => {
-    //       if (response.status == 200) {
-    //         this.messageService.snackSuccessMessage(
-    //           Messages.registerContractSuccess
-    //         );
-    //         this.router.navigate(['/contract']);
-    //       }
-    //     })
-    //   )
-    //   .subscribe({
-    //     error: (err) => {
-    //       console.log('Erros' + err.error.errors);
-    //       console.log(err);
-    //     },
-    //   });
+    //console.log(this.contract.toJSON()); // ajeitar o json compatibilizar com api
+    this.contractService
+      .registerContract(this.contract)
+      .pipe(
+        map((response) => {
+          if (response.status == 200) {
+            this.messageService.snackSuccessMessage(
+              Messages.registerContractSuccess
+            );
+            this.router.navigate(['/contract']);
+          }
+        })
+      )
+      .subscribe({
+        error: (err) => {
+          console.log('Erros' + err.error.errors);
+          console.log(err);
+        },
+      });
   }
 }
