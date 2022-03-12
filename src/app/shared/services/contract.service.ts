@@ -28,9 +28,7 @@ export class ContractService {
       this.mountPageParams(page, direction, order);
     return this.httpClient.get(
       url,
-      this.httpUtils.user.auth
-        ? this.httpUtils.authHeaders(this.httpUtils.user.auth)
-        : {}
+      this.httpUtils.user.auth ? this.httpUtils.authHeaders() : {}
     );
   }
 
@@ -38,9 +36,7 @@ export class ContractService {
     return this.httpClient.post(
       ContractService.NEWCONTRACT_PATH,
       JSON.stringify(contract),
-      this.httpUtils.user.auth
-        ? this.httpUtils.authHeaders(this.httpUtils.user.auth)
-        : {}
+      this.httpUtils.user.auth ? this.httpUtils.authHeaders() : {}
     );
   }
 

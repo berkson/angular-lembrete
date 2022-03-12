@@ -16,7 +16,7 @@ export class LoginService {
     private httpUtils: HttpUtilService
   ) {}
 
-  loginWithCredentialsOrHeader(credentials: Credentials | string): Observable<any> {
+  loginWithCredentialsOrHeader(credentials: Credentials): Observable<any> {
     return this.httpClient.get(
       LoginService.AUTH_PATH,
       this.httpUtils.authHeaders(credentials)

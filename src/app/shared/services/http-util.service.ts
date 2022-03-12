@@ -61,20 +61,23 @@ export class HttpUtilService {
       .subscribe();
   }
 
-  // melhorar esse método para que ele inclua cabeçalho content-type json
-  authHeaders(credentials: Credentials | string) {
-    // usuário já está logado
-    if (typeof credentials === 'string') {
-      const headers = new HttpHeaders(
-        credentials ? { Authorization: credentials } : {}
-      );
-      return { headers: headers };
-    }
+  authHeaders(credentials?: Credentials) {
+    let headers: HttpHeaders = new HttpHeaders();
+
     // primeiro login
-    let auth = `Basic ${btoa(
-      credentials.username + ':' + credentials.password
-    )}`;
-    const headers = new HttpHeaders(credentials ? { Authorization: auth } : {});
+    if (credentials) {
+      let auth = `Basic ${btoa(
+        credentials.username + ':' + credentials.password
+      )}`;
+      headers = new HttpHeaders(credentials ? { Authorization: auth } : {});
+    } else {
+      // usuário já está logado
+      headers = this.user.auth
+        ? headers
+            .append('Authorization', this.user.auth)
+            .append('content-type', 'application/json')
+        : headers;
+    }
 
     return { headers: headers };
   }
