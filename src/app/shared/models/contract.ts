@@ -15,13 +15,13 @@ export class Contract {
 
   public toJSON() {
     return `{
-        id: ${this.id},
-        contract_number: ${this.contractNumber},
-        company: ${JSON.stringify(this.company)},
-        initial_date: ${this.initialDate},
-        final_date: ${this.finalDate},
-        contract_type: ${JSON.stringify(this.contractType)},
-        interested_list: ${JSON.stringify(this.interested)}
+        "id": ${this.id},
+        "contract_number": ${this.contractNumber},
+        "company": ${this.company?.toJSON()},
+        "initial_date": "${this.initialDate}",
+        "final_date": "${this.finalDate}",
+        "contract_type": ${JSON.stringify(this.contractType)},
+        "interested_list": ${JSON.stringify(this.interested)}
       }`;
   }
 

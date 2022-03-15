@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
     private messageService: MessageService,
     private ref: ChangeDetectorRef
   ) {
-    this.contract = new Contract();
+    this.contract = new Contract(0);
     this._show = false;
     this._maxValidity = 0;
   }
@@ -193,7 +193,7 @@ export class RegisterComponent implements OnInit {
     ) {
       return;
     }
-    //console.log(this.contract.toJSON()); // ajeitar o json compatibilizar com api
+   // console.log(this.contract.toJSON()); // ajeitar o json compatibilizar com api
     this.contractService
       .registerContract(this.contract)
       .pipe(
