@@ -1,6 +1,6 @@
-import { Company } from './company';
-import { ContractType } from './contract-type';
-import { Interested } from './interested';
+import { Company } from './company.model';
+import { ContractType } from './contract-type.model';
+import { Interested } from './interested.model.';
 
 export class Contract {
   constructor(

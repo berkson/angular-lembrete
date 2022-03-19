@@ -1,4 +1,4 @@
-import { ContractType } from './contract-type';
+import { ContractType } from './contract-type.model';
 
 describe('ContractType', () => {
   it('should create an instance', () => {

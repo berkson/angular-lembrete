@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
+  ApiError,
   CnpjValidator,
   Company,
   Contract,
@@ -9,6 +10,7 @@ import {
   ContractType,
   ContractTypeService,
   CpfValidator,
+  ErrorMessages,
   Interested,
   Messages,
   MessageService,
@@ -155,6 +157,7 @@ export class RegisterComponent implements OnInit {
   }
 
   private AddBasicInfo() {
+    this.treatAndAddDates();
     this.contract.contractNumber = this.basicForm.get('contractNumber')?.value;
     this.contract.contractType = this.basicForm.get('contractType')?.value;
   }
@@ -182,7 +185,6 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    this.treatAndAddDates();
     this.AddBasicInfo();
     this.AddCompanyInfo();
     this.AddInterested();
@@ -193,7 +195,7 @@ export class RegisterComponent implements OnInit {
     ) {
       return;
     }
-   // console.log(this.contract.toJSON()); // ajeitar o json compatibilizar com api
+    console.log(this.contract.toJSON()); // ajeitar o json compatibilizar com api
     this.contractService
       .registerContract(this.contract)
       .pipe(
@@ -208,8 +210,13 @@ export class RegisterComponent implements OnInit {
       )
       .subscribe({
         error: (err) => {
-          console.log('Erros' + err.error.errors);
-          console.log(err);
+          try {
+            // TODO: if errors have a details field treat the response for the user.
+            let errors: ApiError[] = err.error.errors;
+            this.messageService.showSnackErrors(errors);
+          } catch (e) {
+            this.messageService.snackErrorMessage(ErrorMessages.tryAgain);
+          }
         },
       });
   }

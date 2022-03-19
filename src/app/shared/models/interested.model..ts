@@ -1,4 +1,4 @@
-import { Phone } from './phone';
+import { Phone } from './phone.model';
 
 export class Interested {
   constructor(
