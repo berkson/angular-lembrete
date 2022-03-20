@@ -1,5 +1,11 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormArray,
+  ValidationErrors,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   ApiError,
@@ -14,6 +20,7 @@ import {
   Interested,
   Messages,
   MessageService,
+  ValidationError,
 } from 'src/app/shared';
 import * as moment from 'moment';
 import { map } from 'rxjs';
@@ -210,10 +217,12 @@ export class RegisterComponent implements OnInit {
       )
       .subscribe({
         error: (err) => {
+          console.log(err.error.errors);
           try {
-            // TODO: if errors have a details field treat the response for the user.
-            let errors: ApiError[] = err.error.errors;
-            this.messageService.showSnackErrors(errors);
+            let errors: ValidationError[] = err.error.errors;
+            //this.messageService.showSnackErrors(errors);
+            //verificar o tamanho da snackbar e criar várias linhas.
+            this.messageService.showSnackErrorsDetails(errors);
           } catch (e) {
             this.messageService.snackErrorMessage(ErrorMessages.tryAgain);
           }

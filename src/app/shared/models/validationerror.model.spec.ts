@@ -1,7 +1,9 @@
-import { Validationerror } from './validationerror.model';
+import { ValidationError } from './validationerror.model';
 
 describe('Validationerror', () => {
   it('should create an instance', () => {
-    expect(new Validationerror()).toBeTruthy();
+    expect(
+      new ValidationError(400, 'BAD REQUEST', '/test', ['field invalalid'])
+    ).toBeTruthy();
   });
 });

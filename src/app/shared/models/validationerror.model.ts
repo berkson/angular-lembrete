@@ -1,6 +1,6 @@
 import { ApiError } from './apierror.model';
 
-export class Validationerror extends ApiError {
+export class ValidationError extends ApiError {
   private _details: string[];
 
   constructor(
