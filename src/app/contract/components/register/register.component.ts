@@ -132,23 +132,26 @@ export class RegisterComponent implements OnInit {
   createForms() {
     this.companyForm = this.fb.group({
       cnpj: ['', [CnpjValidator]],
-      name: ['', [Validators.min(5)]],
+      name: ['', [Validators.minLength(5), Validators.maxLength(255)]],
     });
     this.contactForm = this.fb.group({
       interested: this.fb.array([
         this.fb.group({
           cpf: ['', [CpfValidator]],
-          name: ['', [Validators.min(3)]],
+          name: ['', [Validators.minLength(3), Validators.maxLength(255)]],
           email: ['', [Validators.email]],
           phones: this.fb.array([this.fb.control('')]),
         }),
       ]),
     });
     this.basicForm = this.fb.group({
-      contractNumber: ['', [Validators.required]],
+      contractNumber: [
+        '',
+        [Validators.required, Validators.pattern('^([\\d])+/([2][\\d]{3})$')],
+      ],
       initialDate: ['', [Validators.required]],
-      finalDate: ['', [Validators.required, Validators.max(60)]],
       contractType: ['', [Validators.required]],
+      finalDate: ['', [Validators.required, Validators.max(60)]],
     });
   }
 

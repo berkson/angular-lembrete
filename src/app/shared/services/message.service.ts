@@ -23,7 +23,12 @@ export class MessageService {
     let messages: string[] = [];
     errors.forEach((e) => {
       e.details.forEach((m) => {
-        messages.push(m.split(':')[1].trim());
+        let text: string[] = m.split(':');
+        if (text.length > 2) {
+          messages.push(`${text[1].trim()}: ${text[2].trim()}`);
+        } else {
+          messages.push(text[1].trim());
+        }
       });
     });
     this.multiError(messages, 'bottom');
