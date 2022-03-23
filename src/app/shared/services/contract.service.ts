@@ -32,6 +32,7 @@ export class ContractService {
     );
   }
 
+  // put {observe: 'response'} to catch response 200 status from backend in register view
   registerContract(contract: Contract): Observable<any> {
     return this.httpClient.post(
       ContractService.NEWCONTRACT_PATH,

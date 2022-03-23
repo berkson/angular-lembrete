@@ -22,6 +22,7 @@ export class MessageService {
   showSnackErrorsDetails(errors: ValidationError[]): void {
     let messages: string[] = [];
     errors.forEach((e) => {
+      messages.push(e.message + ': ');
       e.details.forEach((m) => {
         let text: string[] = m.split(':');
         if (text.length > 2) {
@@ -31,7 +32,7 @@ export class MessageService {
         }
       });
     });
-    this.multiError(messages, 'bottom');
+    this.multiError(messages, 'top');
   }
 
   /**

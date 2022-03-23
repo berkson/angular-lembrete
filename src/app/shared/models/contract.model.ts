@@ -16,7 +16,7 @@ export class Contract {
   public toJSON() {
     return `{
         "id": ${this.id},
-        "contract_number": ${this.contractNumber},
+        "contract_number": "${this.contractNumber}",
         "company": ${this.company?.toJSON()},
         "initial_date": "${this.initialDate}",
         "final_date": "${this.finalDate}",

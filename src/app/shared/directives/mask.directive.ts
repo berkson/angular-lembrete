@@ -2,7 +2,7 @@ import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Directive({
-  selector: '[mask]',
+  selector: '[simple-mask]',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -14,7 +14,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class MaskDirective implements ControlValueAccessor {
   onTouched: any;
   onChange: any;
-  @Input('mask') mask: string;
+  @Input('simple-mask') mask: string;
 
   constructor(private el: ElementRef) {
     this.mask = '';

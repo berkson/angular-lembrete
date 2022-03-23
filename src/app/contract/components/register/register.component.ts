@@ -1,14 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormArray,
-  ValidationErrors,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
-  ApiError,
   CnpjValidator,
   Company,
   Contract,
@@ -20,6 +13,7 @@ import {
   Interested,
   Messages,
   MessageService,
+  PastOrPresentValidator,
   ValidationError,
 } from 'src/app/shared';
 import * as moment from 'moment';
@@ -73,6 +67,10 @@ export class RegisterComponent implements OnInit {
     return this._show;
   }
 
+  get contractPlaceHolder(): string {
+    return 20 + '/' + moment().year();
+  }
+
   /**
    * Mostra o campo de tempo de contrato e seta o valor máximo desse campo
    * @param event evento de seleção
@@ -101,7 +99,7 @@ export class RegisterComponent implements OnInit {
     this.interested.push(
       this.fb.group({
         cpf: ['', [CpfValidator]],
-        name: ['', [Validators.min(3)]],
+        name: ['', [Validators.minLength(3)]],
         email: ['', [Validators.email]],
         phones: this.fb.array([this.fb.control('')]),
       })
@@ -149,7 +147,7 @@ export class RegisterComponent implements OnInit {
         '',
         [Validators.required, Validators.pattern('^([\\d])+/([2][\\d]{3})$')],
       ],
-      initialDate: ['', [Validators.required]],
+      initialDate: ['', [Validators.required, PastOrPresentValidator]],
       contractType: ['', [Validators.required]],
       finalDate: ['', [Validators.required, Validators.max(60)]],
     });
@@ -223,8 +221,6 @@ export class RegisterComponent implements OnInit {
           console.log(err.error.errors);
           try {
             let errors: ValidationError[] = err.error.errors;
-            //this.messageService.showSnackErrors(errors);
-            //verificar o tamanho da snackbar e criar várias linhas.
             this.messageService.showSnackErrorsDetails(errors);
           } catch (e) {
             this.messageService.snackErrorMessage(ErrorMessages.tryAgain);
