@@ -1,1 +1,1 @@
-export * from './mask.directive';
+export * from './simplemask.directive';

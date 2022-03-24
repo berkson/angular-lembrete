@@ -32,10 +32,13 @@ import {
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { PtBrMatPaginatorIntl } from './shared/intl';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
 
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    NgxMaskModule.forRoot(),
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,

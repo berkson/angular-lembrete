@@ -1,6 +1,6 @@
 import createSpyObj = jasmine.createSpyObj;
 import { ElementRef } from '@angular/core';
-import { MaskDirective } from './mask.directive';
+import { MaskDirective } from './simplemask.directive';
 
 let element: ElementRef = createSpyObj('idNaicsRef', ['nativeElement']);
 

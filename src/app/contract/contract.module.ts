@@ -25,6 +25,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatStepperModule } from '@angular/material/stepper';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatCardModule } from '@angular/material/card';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   declarations: [ContractComponent, ListingComponent, RegisterComponent],
@@ -49,6 +50,7 @@ import { MatCardModule } from '@angular/material/card';
     MatStepperModule,
     MatCardModule,
     ContractRoutingModule,
+    NgxMaskModule,
   ],
   providers: [
     ContractService,
