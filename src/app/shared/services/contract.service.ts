@@ -32,12 +32,14 @@ export class ContractService {
     );
   }
 
-  // put {observe: 'response'} to catch response 200 status from backend in register view
   registerContract(contract: Contract): Observable<any> {
+    let headers = this.httpUtils.user.auth
+      ? this.httpUtils.authHeaders().headers
+      : {};
     return this.httpClient.post(
       ContractService.NEWCONTRACT_PATH,
       contract.toJSON(),
-      this.httpUtils.user.auth ? this.httpUtils.authHeaders() : {}
+      { headers: headers, observe: 'response' }
     );
   }
 

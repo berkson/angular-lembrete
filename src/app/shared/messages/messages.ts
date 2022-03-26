@@ -14,5 +14,5 @@ export const Messages = {
   codeSuccess: 'Código correto!',
   enterNewPass: 'Digite a nova senha.',
   changePassSuccess: 'Senha alterada com sucesso!',
-  registerContractSuccess: 'Contrato cadastrado co sucesso!',
+  registerContractSuccess: 'Contrato cadastrado com sucesso!',
 };

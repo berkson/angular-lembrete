@@ -12,6 +12,7 @@ import { Contract, ContractService, HttpUtilService } from 'src/app/shared';
 export class ListingComponent implements OnInit {
   dataSource: MatTableDataSource<Contract>;
   columns!: string[];
+  _itemCount: number = 0;
 
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
@@ -44,6 +45,11 @@ export class ListingComponent implements OnInit {
     this.queryData();
   }
 
+  get itemCount() {
+    return this._itemCount;
+  }
+
+  // verify paginator
   queryData() {
     this.contractService
       .listAllContracts(
@@ -53,11 +59,12 @@ export class ListingComponent implements OnInit {
       )
       .subscribe({
         next: (data) => {
-          //console.log(data);
+          console.log(data);
           const contracts = data.content.map((obj: any) =>
             Contract.fromObject(obj)
           );
           this.dataSource.data = contracts;
+          this._itemCount = data.content.totalElements;
           this.dataSource.sort = this.sort;
           this.dataSource.paginator = this.paginator;
         },
