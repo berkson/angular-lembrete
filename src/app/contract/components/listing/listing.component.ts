@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Contract, ContractService, HttpUtilService } from 'src/app/shared';
+import { Page } from 'src/app/shared/models/request';
 
 @Component({
   selector: 'app-listing',
@@ -59,12 +60,12 @@ export class ListingComponent implements OnInit {
       )
       .subscribe({
         next: (data) => {
-          console.log(data);
-          const contracts = data.content.map((obj: any) =>
+          const page: Page = data;
+          const contracts = page.content.map((obj: any) =>
             Contract.fromObject(obj)
           );
           this.dataSource.data = contracts;
-          this._itemCount = data.content.totalElements;
+          this._itemCount = page.totalElements;
           this.dataSource.sort = this.sort;
           this.dataSource.paginator = this.paginator;
         },
