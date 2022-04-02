@@ -21,21 +21,25 @@ export class MessageService {
 
   // TODO: verify possibility of validation errors and api errors.
   showSnackErrorsDetails(errors: ValidationError[]): void {
-    if (errors.length == 1 && !errors[0].details) {
-      this.snackErrorMessage(errors[0].message);
-      return;
-    }
+    // if (errors.length == 1 && !errors[0].details) {
+    //   this.snackErrorMessage(errors[0].message);
+    //   return;
+    // }
     let messages: string[] = [];
     errors.forEach((e) => {
-      messages.push(e.message + ': ');
-      e.details.forEach((m) => {
-        let text: string[] = m.split(':');
-        if (text.length > 2) {
-          messages.push(`${text[1].trim()}: ${text[2].trim()}`);
-        } else {
-          messages.push(text[1].trim());
-        }
-      });
+      if (!e.details) {
+        messages.push(e.message);
+      } else {
+        messages.push(e.message + ': ');
+        e.details.forEach((m) => {
+          let text: string[] = m.split(':');
+          if (text.length > 2) {
+            messages.push(`${text[1].trim()}: ${text[2].trim()}`);
+          } else {
+            messages.push(text[1].trim());
+          }
+        });
+      }
     });
     this.multiError(messages, 'top');
   }
