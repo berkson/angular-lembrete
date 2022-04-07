@@ -4,7 +4,8 @@
       <ng-template matStepLabel>Informações Basicas</ng-template>
       <mat-form-field appearance="fill">
         <mat-label>Contrato</mat-label>
-        <input matInput [placeholder]="contractPlaceHolder" formControlName="contractNumber" required>
+        <input matInput [placeholder]="contractPlaceHolder" formControlName="contractNumber" required
+          (blur)="checkContract()" #contractNumberInput>
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Data Inicial</mat-label>

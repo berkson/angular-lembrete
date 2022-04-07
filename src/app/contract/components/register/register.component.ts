@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
@@ -32,6 +38,7 @@ export class RegisterComponent implements OnInit {
   contract: Contract;
   _show: boolean;
   _maxValidity: number;
+  @ViewChild('contractNumberInput') contractNumberInput!: ElementRef;
 
   constructor(
     private router: Router,
@@ -53,7 +60,6 @@ export class RegisterComponent implements OnInit {
   getTypes() {
     this.cotractTypeService.getAllContractTypes().subscribe({
       next: (data) => {
-        //console.log(data);
         this.types = data.contract_types;
       },
     });
@@ -192,6 +198,26 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  checkContract() {
+    if (
+      this.basicForm.get('contractNumber') !== null &&
+      this.basicForm.get('contractNumber')?.value !== '' &&
+      this.basicForm.get('contractNumber')?.valid
+    ) {
+      this.contractService
+        .checkIfContractExists(this.basicForm.get('contractNumber')!.value)
+        .subscribe({
+          error: (err) => {
+            this.messageService.snackErrorMessage(err.error);
+            this.basicForm.controls['contractNumber'].setValue('');
+            this.contractNumberInput.nativeElement.focus();
+          },
+        });
+    }
+  }
+
+  // TODO: check if the company and the interested exists and bring data to the form.
+
   register() {
     this.AddBasicInfo();
     this.AddCompanyInfo();
@@ -203,7 +229,6 @@ export class RegisterComponent implements OnInit {
     ) {
       return;
     }
-    console.log(this.contract.toJSON()); // ajeitar o json compatibilizar com api
     this.contractService
       .registerContract(this.contract)
       .pipe(
@@ -218,7 +243,6 @@ export class RegisterComponent implements OnInit {
       )
       .subscribe({
         error: (err) => {
-          console.log(err.error.errors);
           try {
             let errors: ValidationError[] = err.error.errors;
             this.messageService.showSnackErrorsDetails(errors);

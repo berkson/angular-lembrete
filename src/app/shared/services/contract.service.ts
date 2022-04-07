@@ -12,6 +12,7 @@ export class ContractService {
   public static readonly CONTRACTS_PATH: string = env.baseApiHOff + 'contract';
   public static readonly CONTRACTSLIST_PATH: string = `${ContractService.CONTRACTS_PATH}/all`;
   public static readonly NEWCONTRACT_PATH: string = `${ContractService.CONTRACTS_PATH}/new`;
+  public static readonly CHECKCONTRACT_PATH: string = `${ContractService.CONTRACTS_PATH}/check`;
 
   constructor(
     private httpClient: HttpClient,
@@ -32,14 +33,18 @@ export class ContractService {
     );
   }
 
+  checkIfContractExists(number: string): Observable<any> {
+    return this.httpClient.post(ContractService.CHECKCONTRACT_PATH, number, {
+      headers: this.getHeaders(),
+      observe: 'response',
+    });
+  }
+
   registerContract(contract: Contract): Observable<any> {
-    let headers = this.httpUtils.user.auth
-      ? this.httpUtils.authHeaders().headers
-      : {};
     return this.httpClient.post(
       ContractService.NEWCONTRACT_PATH,
       contract.toJSON(),
-      { headers: headers, observe: 'response' }
+      { headers: this.getHeaders(), observe: 'response' }
     );
   }
 
@@ -49,5 +54,12 @@ export class ContractService {
     order: string
   ): string {
     return `?pag=${page}&ord=${order}&dir=${direction}`;
+  }
+
+  private getHeaders() {
+    let headers = this.httpUtils.user.auth
+      ? this.httpUtils.authHeaders().headers
+      : {};
+    return headers;
   }
 }
