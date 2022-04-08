@@ -19,12 +19,8 @@ export class MessageService {
     } else this.oneError(errors[0]);
   }
 
-  // TODO: verify possibility of validation errors and api errors.
+
   showSnackErrorsDetails(errors: ValidationError[]): void {
-    // if (errors.length == 1 && !errors[0].details) {
-    //   this.snackErrorMessage(errors[0].message);
-    //   return;
-    // }
     let messages: string[] = [];
     errors.forEach((e) => {
       if (!e.details) {

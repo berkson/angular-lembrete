@@ -8,6 +8,7 @@ import {
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
+  ApiError,
   CnpjValidator,
   Company,
   Contract,
@@ -24,6 +25,7 @@ import {
 } from 'src/app/shared';
 import * as moment from 'moment';
 import { map } from 'rxjs';
+import { InterestedService } from 'src/app/shared/services/contract/interested.service';
 
 @Component({
   selector: 'app-register',
@@ -45,6 +47,7 @@ export class RegisterComponent implements OnInit {
     private fb: FormBuilder,
     private cotractTypeService: ContractTypeService,
     private contractService: ContractService,
+    private interestedService: InterestedService,
     private messageService: MessageService,
     private ref: ChangeDetectorRef
   ) {
@@ -207,16 +210,50 @@ export class RegisterComponent implements OnInit {
       this.contractService
         .checkIfContractExists(this.basicForm.get('contractNumber')!.value)
         .subscribe({
+          next: (data) => {
+            if (data.body) {
+              this.messageService.snackErrorMessage(
+                ErrorMessages.contractAlreadyExists(
+                  this.basicForm.controls['contractNumber']!.value
+                )
+              );
+              this.basicForm.controls['contractNumber'].setValue('');
+              this.contractNumberInput.nativeElement.focus();
+            }
+          },
           error: (err) => {
-            this.messageService.snackErrorMessage(err.error);
-            this.basicForm.controls['contractNumber'].setValue('');
-            this.contractNumberInput.nativeElement.focus();
+            try {
+              let errors: ApiError[] = err.error.errors;
+              this.messageService.showSnackErrors(errors);
+            } catch (e) {
+              this.messageService.snackErrorMessage(ErrorMessages.tryAgain);
+            }
           },
         });
     }
   }
 
-  // TODO: check if the company and the interested exists and bring data to the form.
+  // TODO: Tratamento de erro
+  loadInterested(index: number) {
+    if (
+      this.interested.controls[index].get('cpf') !== null &&
+      this.interested.controls[index].get('cpf')?.value !== '' &&
+      this.interested.controls[index].get('cpf')?.valid
+    ) {
+      this.interestedService
+        .getInterested(this.interested.controls[index].get('cpf')?.value)
+        .subscribe({
+          next: (data) => {
+            this.interested.controls[index].get('name')!.setValue(data.name);
+            this.interested.controls[index].get('email')!.setValue(data.email);
+            for(let i = 0; i < data.phones.length; i++){
+              if(i > 0) this.interestedPhones(index).push(this.fb.control(''))
+              this.interestedPhones(index).controls[i].setValue(data.phones[i].tel);
+            }
+          },
+        });
+    }
+  }
 
   register() {
     this.AddBasicInfo();

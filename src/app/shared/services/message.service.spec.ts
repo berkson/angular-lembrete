@@ -7,7 +7,9 @@ describe('MessageService', () => {
   let service: MessageService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ imports: [MatSnackBarModule] });
+    TestBed.configureTestingModule({
+      imports: [MatSnackBarModule],
+    });
     service = TestBed.inject(MessageService);
   });
 

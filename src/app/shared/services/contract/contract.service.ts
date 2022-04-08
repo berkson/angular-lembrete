@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment as env } from 'src/environments/environment';
 import { HttpUtilService } from '..';
-import { Contract } from '../models';
+import { Contract } from '../../models';
 
 @Injectable({
   providedIn: 'root',

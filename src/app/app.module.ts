@@ -33,6 +33,9 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { PtBrMatPaginatorIntl } from './shared/intl';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatListModule } from '@angular/material/list';
+import { RouterModule } from '@angular/router';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 @NgModule({
@@ -48,6 +51,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     MatIconModule,
     MatTableModule,
     MatSortModule,
+    MatSnackBarModule,
+    MatListModule,
     LoginModule,
     LoginRoutingModule,
     FlexLayoutModule,

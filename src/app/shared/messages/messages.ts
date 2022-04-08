@@ -7,6 +7,7 @@ export const ErrorMessages = {
   notAdmin: 'Acesse o sistema como Administrador',
   notUser: 'Somente usuários têm acesso ao sistema',
   resctrict: 'Restrito',
+  contractAlreadyExists: (number:string) => `O contrato ${number} já existe!`
 };
 export const Messages = {
   success: 'Sucesso',
