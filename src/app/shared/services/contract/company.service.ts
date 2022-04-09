@@ -7,17 +7,16 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class InterestedService {
-  public static readonly INTERESTED_PATH: string =
-    env.baseApiHOff + 'interested';
+export class CompanyService {
+  public static readonly COMPANY_PATH: string = env.baseApiHOff + 'company';
 
   constructor(
     private httpClient: HttpClient,
     private httpUtilService: HttpUtilService
   ) {}
 
-  public getInterested(cpf: string): Observable<any> {
-    let url = InterestedService.INTERESTED_PATH + `/${cpf}`;
+  public getCompany(cnpj: string): Observable<any> {
+    let url = CompanyService.COMPANY_PATH + `/${cnpj}`;
     return this.httpClient.get(
       url,
       this.httpUtilService.user.auth ? this.httpUtilService.authHeaders() : {}

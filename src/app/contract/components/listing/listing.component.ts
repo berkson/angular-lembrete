@@ -50,7 +50,7 @@ export class ListingComponent implements OnInit {
     return this._itemCount;
   }
 
-  // verify paginator
+  // TODO: verify paginator is the next step
   queryData() {
     this.contractService
       .listAllContracts(

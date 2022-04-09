@@ -11,6 +11,7 @@ import {
   ApiError,
   CnpjValidator,
   Company,
+  CompanyService,
   Contract,
   ContractService,
   ContractType,
@@ -48,6 +49,7 @@ export class RegisterComponent implements OnInit {
     private cotractTypeService: ContractTypeService,
     private contractService: ContractService,
     private interestedService: InterestedService,
+    private companyService: CompanyService,
     private messageService: MessageService,
     private ref: ChangeDetectorRef
   ) {
@@ -233,7 +235,28 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  // TODO: Tratamento de erro
+  loadCompany() {
+    if (
+      this.companyForm.get('cnpj')?.value !== null &&
+      this.companyForm.get('cnpj')?.value !== '' &&
+      this.companyForm.get('cnpj')?.valid
+    ) {
+      this.companyService
+        .getCompany(this.companyForm.get('cnpj')!.value)
+        .subscribe({
+          next: (data) => {
+            this.companyForm.get('name')?.setValue(data.name);
+          },
+          error: (err) => {
+            if (err.error.errors[0].status === 400) {
+              console.info('Nova Empresa');
+              this.companyForm.get('name')?.setValue('');
+            }
+          },
+        });
+    }
+  }
+
   loadInterested(index: number) {
     if (
       this.interested.controls[index].get('cpf') !== null &&
@@ -246,9 +269,25 @@ export class RegisterComponent implements OnInit {
           next: (data) => {
             this.interested.controls[index].get('name')!.setValue(data.name);
             this.interested.controls[index].get('email')!.setValue(data.email);
-            for(let i = 0; i < data.phones.length; i++){
-              if(i > 0) this.interestedPhones(index).push(this.fb.control(''))
-              this.interestedPhones(index).controls[i].setValue(data.phones[i].tel);
+            for (let i = 0; i < data.phones.length; i++) {
+              if (i > 0) this.interestedPhones(index).push(this.fb.control(''));
+              this.interestedPhones(index).controls[i].setValue(
+                data.phones[i].tel
+              );
+            }
+          },
+          error: (err) => {
+            if (err.error.errors[0].status === 400) {
+              console.info('Novo Interessado!');
+              this.interested.controls[index].get('name')!.setValue('');
+              this.interested.controls[index].get('email')!.setValue('');
+              this.interestedPhones(index).controls[0].setValue('');
+              if (this.interestedPhones(index).controls.length > 1) {
+                this.interestedPhones(index).controls.splice(
+                  1,
+                  this.interestedPhones(index).controls.length - 1
+                );
+              }
             }
           },
         });
@@ -280,13 +319,17 @@ export class RegisterComponent implements OnInit {
       )
       .subscribe({
         error: (err) => {
-          try {
-            let errors: ValidationError[] = err.error.errors;
-            this.messageService.showSnackErrorsDetails(errors);
-          } catch (e) {
-            this.messageService.snackErrorMessage(ErrorMessages.tryAgain);
-          }
+          this.handleValidationErrors(err.error.errors);
         },
       });
+  }
+
+  handleValidationErrors(problems: any) {
+    try {
+      let errors: ValidationError[] = problems;
+      this.messageService.showSnackErrorsDetails(errors);
+    } catch (e) {
+      this.messageService.snackErrorMessage(ErrorMessages.tryAgain);
+    }
   }
 }
