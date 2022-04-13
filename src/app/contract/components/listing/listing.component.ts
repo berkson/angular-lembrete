@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,12 +14,15 @@ export class ListingComponent implements OnInit {
   dataSource: MatTableDataSource<Contract>;
   columns!: string[];
   _itemCount: number = 0;
+  _index: number = 0;
 
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+
   constructor(
     private contractService: ContractService,
-    private httpUtils: HttpUtilService
+    private httpUtils: HttpUtilService,
+    private ref: ChangeDetectorRef
   ) {
     this.dataSource = new MatTableDataSource();
   }
@@ -43,14 +46,19 @@ export class ListingComponent implements OnInit {
         'company',
       ];
     }
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
     this.queryData();
   }
 
   get itemCount() {
     return this._itemCount;
   }
+  get index() {
+    return this._index;
+  }
 
-  // TODO: verify paginator is the next step
+  // TODO: verify ordering.
   queryData() {
     this.contractService
       .listAllContracts(
@@ -60,14 +68,15 @@ export class ListingComponent implements OnInit {
       )
       .subscribe({
         next: (data) => {
+          console.log(data);
           const page: Page = data;
+          this._itemCount = page.totalElements;
+          this._index = page.number;
           const contracts = page.content.map((obj: any) =>
             Contract.fromObject(obj)
           );
           this.dataSource.data = contracts;
-          this._itemCount = page.totalElements;
-          this.dataSource.sort = this.sort;
-          this.dataSource.paginator = this.paginator;
+          this.dataSource._updatePaginator(page.size + page.numberOfElements);
         },
       });
   }

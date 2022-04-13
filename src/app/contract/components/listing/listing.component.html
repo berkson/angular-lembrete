@@ -60,5 +60,6 @@
   </ng-container>
 </mat-table>
 
-<mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 15, 25]" [length]="itemCount">
+<mat-paginator #paginator (page)="queryData()" [length]="itemCount" [pageIndex]="index" [pageSize]="5"
+  [pageSizeOptions]="[5, 10, 15, 25]">
 </mat-paginator>
