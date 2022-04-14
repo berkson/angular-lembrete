@@ -3,7 +3,7 @@
 </a>
 <mat-table [dataSource]="dataSource" matSort (matSortChange)="queryData()">
   <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: columns"></mat-row>
+  <mat-row class="selected-row" (click)="printRow(row)" *matRowDef="let row; columns: columns"></mat-row>
 
   <ng-container *ngIf="isAdmin()" matColumnDef="id">
     <mat-header-cell *matHeaderCellDef mat-sort-header="id">

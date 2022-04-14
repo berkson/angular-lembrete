@@ -76,3 +76,8 @@ body {
   color: mat.get-color-from-palette($warn-palette, "A200");
   white-space: pre-wrap;
 }
+
+.selected-row:hover {
+  background-color: mat.get-color-from-palette($primary-palette, "A200");
+  cursor: pointer;
+}

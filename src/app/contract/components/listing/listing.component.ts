@@ -1,9 +1,11 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Contract, ContractService, HttpUtilService } from 'src/app/shared';
 import { Page } from 'src/app/shared/models/request';
+import { ContractDialogComponent } from './dialogs';
 
 @Component({
   selector: 'app-listing',
@@ -22,7 +24,7 @@ export class ListingComponent implements OnInit {
   constructor(
     private contractService: ContractService,
     private httpUtils: HttpUtilService,
-    private ref: ChangeDetectorRef
+    private dialog: MatDialog
   ) {
     this.dataSource = new MatTableDataSource();
   }
@@ -76,12 +78,21 @@ export class ListingComponent implements OnInit {
             Contract.fromObject(obj)
           );
           this.dataSource.data = contracts;
-          this.dataSource._updatePaginator(page.size + page.numberOfElements);
+          this.dataSource._updatePaginator(page.totalElements);
         },
       });
   }
 
   isAdmin(): boolean {
     return this.httpUtils.isAdmin();
+  }
+
+  printRow(row: any): void {
+    console.log(row);
+    let contract: Contract = row as Contract;
+    let dialogRef = this.dialog.open(ContractDialogComponent, {
+      width: '80%',
+      data: contract,
+    });
   }
 }

@@ -1,0 +1,32 @@
+<div class="header dialogBody">
+  <h1 mat-dialog-title>Contrato {{contract.contractNumber}}</h1>
+</div>
+<div mat-dialog-content>
+  <div class="dialogBody">
+    <mat-form-field class="flex-item1" appearance="outline">
+      <mat-label>Data Inicial</mat-label>
+      <input tabindex="-1" matInput readonly="true" [value]="contract.initialDate!| brDate">
+    </mat-form-field>
+    <mat-form-field class="flex-item1" appearance="outline">
+      <mat-label>Data Final</mat-label>
+      <input tabindex="-1" matInput readonly="true" [value]="contract.finalDate! | brDate">
+    </mat-form-field>
+  </div>
+
+  <div class="dialogBody">
+    <mat-form-field class="flex-item1" appearance="outline">
+      <mat-label>CNPJ</mat-label>
+      <input tabindex="-1" matInput readonly="true" [value]="contract.company?.cnpj! | mask:'00.000.000/0000-00'">
+    </mat-form-field>
+    <mat-form-field class="flex-item2" appearance="outline">
+      <mat-label>Empresa</mat-label>
+      <textarea tabindex="-1" matInput readonly="true">{{contract.company?.name}}</textarea>
+    </mat-form-field>
+  </div>
+  <div class="dialogBody">
+    <mat-form-field class="flex-item1" appearance="outline">
+      <mat-label>Tipo de Cotrato</mat-label>
+      <textarea tabindex="-1" matInput readonly="true">{{contract.contractType?.description}}</textarea>
+    </mat-form-field>
+  </div>
+</div>

@@ -4,6 +4,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import {
   ContractComponent,
+  ContractDialogComponent,
   ListingComponent,
   RegisterComponent,
 } from './components';
@@ -25,10 +26,11 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatStepperModule } from '@angular/material/stepper';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
-  declarations: [ContractComponent, ListingComponent, RegisterComponent],
+  declarations: [ContractComponent, ListingComponent, RegisterComponent, ContractDialogComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,
@@ -51,6 +53,7 @@ import { NgxMaskModule } from 'ngx-mask';
     MatCardModule,
     ContractRoutingModule,
     NgxMaskModule,
+    MatDialogModule,
   ],
   providers: [
     ContractService,
