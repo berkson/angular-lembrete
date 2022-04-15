@@ -1,5 +1,6 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -26,6 +27,7 @@ describe('ListingComponent', () => {
         MatTableModule,
         BrowserAnimationsModule,
         MatSortModule,
+        MatDialogModule
       ],
     }).compileComponents();
   });
