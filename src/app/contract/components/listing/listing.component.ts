@@ -17,6 +17,7 @@ export class ListingComponent implements OnInit {
   columns!: string[];
   _itemCount: number = 0;
   _index: number = 0;
+  _memoryIndex: number = 0;
 
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
@@ -50,6 +51,9 @@ export class ListingComponent implements OnInit {
     }
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+  }
+
+  ngAfterViewInit(): void {
     this.queryData();
   }
 
@@ -60,11 +64,15 @@ export class ListingComponent implements OnInit {
     return this._index;
   }
 
-  // TODO: verify ordering.
-  queryData() {
+  order() {
+    this.queryData(0);
+  }
+
+  // TODO: Conclude dialog html
+  queryData(firstPage?: number) {
     this.contractService
       .listAllContracts(
-        this.paginator.pageIndex,
+        firstPage !== undefined ? firstPage : this.paginator.pageIndex,
         this.sort.direction,
         this.sort.active ? this.sort.active : ''
       )
@@ -74,7 +82,7 @@ export class ListingComponent implements OnInit {
           const page: Page = data;
           this._itemCount = page.totalElements;
           this._index = page.number;
-          const contracts = page.content.map((obj: any) =>
+          const contracts: [] = page.content.map((obj: any) =>
             Contract.fromObject(obj)
           );
           this.dataSource.data = contracts;

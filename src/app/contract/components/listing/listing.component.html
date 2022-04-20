@@ -1,7 +1,7 @@
 <a color="warn" mat-raised-button routerLink="/contract/register">
   Adicionar Contrato
 </a>
-<mat-table [dataSource]="dataSource" matSort (matSortChange)="queryData()">
+<mat-table [dataSource]="dataSource" matSort (matSortChange)="order()">
   <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
   <mat-row class="selected-row" (click)="printRow(row)" *matRowDef="let row; columns: columns"></mat-row>
 
