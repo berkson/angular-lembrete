@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { environment as env } from 'src/environments/environment';
 import { HttpUtilService } from '..';
@@ -46,6 +47,10 @@ export class ContractService {
       contract.toJSON(),
       { headers: this.getHeaders(), observe: 'response' }
     );
+  }
+
+  canAdditivate(contract: Contract): boolean {
+    return moment(contract.finalDate).diff(moment(), 'days') <= -1;
   }
 
   private mountPageParams(

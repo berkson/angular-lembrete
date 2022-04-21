@@ -39,6 +39,7 @@ export class ListingComponent implements OnInit {
         'final_date',
         'contract_type',
         'company',
+        'actions',
       ];
     } else {
       this.columns = [
@@ -47,6 +48,7 @@ export class ListingComponent implements OnInit {
         'final_date',
         'contract_type',
         'company',
+        'actions',
       ];
     }
     this.dataSource.sort = this.sort;
@@ -66,6 +68,16 @@ export class ListingComponent implements OnInit {
 
   order() {
     this.queryData(0);
+  }
+
+  additivate(event: any, document: any): void {
+    event.stopPropagation();
+    let contract: Contract = document;
+  }
+
+  showButton(document: any): boolean {
+    let contract: Contract = document;
+    return this.contractService.canAdditivate(contract);
   }
 
   // TODO: Conclude dialog html

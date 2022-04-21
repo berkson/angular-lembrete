@@ -1,6 +1,7 @@
 <div class="header dialogBody">
   <h1 mat-dialog-title>Contrato {{contract.contractNumber}}</h1>
 </div>
+<mat-divider class="divider"></mat-divider>
 <div mat-dialog-content>
   <div class="dialogBody">
     <mat-form-field class="flex-item1" appearance="outline">
@@ -27,6 +28,18 @@
     <mat-form-field class="flex-item1" appearance="outline">
       <mat-label>Tipo de Cotrato</mat-label>
       <textarea tabindex="-1" matInput readonly="true">{{contract.contractType?.description}}</textarea>
+    </mat-form-field>
+  </div>
+  <div class="header dialogBody">
+    <h2 mat-dialog-title>Interessados</h2>
+  </div>
+  <mat-divider class="divider"></mat-divider>
+  <div class="dialogBody" *ngFor="let interested of contract.interested; let i = index">
+    <mat-form-field class="flex-item1 mid-label" appearance="outline">
+      <mat-label>{{interested.cpf! | mask:'000.000.000-00' }} - {{interested.name}}</mat-label>
+      <div *ngFor="let phone of interested.phones">
+        <input tabindex="-1" matInput readonly="true" [value]="phone.tel! | mask:'(00)0000-0000||(00)00000-0000'">
+      </div>
     </mat-form-field>
   </div>
 </div>
