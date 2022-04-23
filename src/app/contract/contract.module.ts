@@ -7,6 +7,7 @@ import {
   ContractDialogComponent,
   ListingComponent,
   RegisterComponent,
+  AditiveDialogComponent,
 } from './components';
 import { ContractRoutingModule } from './contract-routing.module';
 import { MatButtonModule } from '@angular/material/button';
@@ -30,7 +31,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
-  declarations: [ContractComponent, ListingComponent, RegisterComponent, ContractDialogComponent],
+  declarations: [ContractComponent, ListingComponent, RegisterComponent, ContractDialogComponent, AditiveDialogComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,

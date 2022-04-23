@@ -313,7 +313,7 @@ export class RegisterComponent implements OnInit {
             this.messageService.snackSuccessMessage(
               Messages.registerContractSuccess
             );
-            this.router.navigate(['/contract']);
+            this.navigateToList();
           }
         })
       )
@@ -322,6 +322,9 @@ export class RegisterComponent implements OnInit {
           this.handleValidationErrors(err.error.errors);
         },
       });
+  }
+  navigateToList() {
+    this.router.navigate(['/contract']);
   }
 
   handleValidationErrors(problems: any) {

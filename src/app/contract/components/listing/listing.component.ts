@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Contract, ContractService, HttpUtilService } from 'src/app/shared';
 import { Page } from 'src/app/shared/models/request';
-import { ContractDialogComponent } from './dialogs';
+import { AditiveDialogComponent, ContractDialogComponent } from '../dialogs';
 
 @Component({
   selector: 'app-listing',
@@ -70,11 +70,6 @@ export class ListingComponent implements OnInit {
     this.queryData(0);
   }
 
-  additivate(event: any, document: any): void {
-    event.stopPropagation();
-    let contract: Contract = document;
-  }
-
   showButton(document: any): boolean {
     let contract: Contract = document;
     return this.contractService.canAdditivate(contract);
@@ -108,9 +103,17 @@ export class ListingComponent implements OnInit {
   }
 
   printRow(row: any): void {
-    console.log(row);
     let contract: Contract = row as Contract;
     let dialogRef = this.dialog.open(ContractDialogComponent, {
+      width: '80%',
+      data: contract,
+    });
+  }
+
+  additivate(event: any, document: any): void {
+    event.stopPropagation();
+    let contract: Contract = document as Contract;
+    let dialogRef = this.dialog.open(AditiveDialogComponent, {
       width: '80%',
       data: contract,
     });

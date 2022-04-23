@@ -1,2 +1,2 @@
 export * from './listing.component';
-export * from './dialogs';
+export * from '../dialogs';

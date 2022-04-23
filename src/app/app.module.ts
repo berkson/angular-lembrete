@@ -48,6 +48,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HttpClientXsrfModule,
     BrowserAnimationsModule,
     MatToolbarModule,
+    MatTableModule,
     MatIconModule,
     MatTableModule,
     MatSortModule,
