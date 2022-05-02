@@ -2,7 +2,6 @@ import { Component, HostListener } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { HttpUtilService } from './shared/services';
 import { filter } from 'rxjs';
-import { LoginService } from './authentication';
 import { ErrorMessages, MessageService, User } from './shared';
 
 @Component({
@@ -15,8 +14,7 @@ export class AppComponent {
   constructor(
     private httpUtils: HttpUtilService,
     private router: Router,
-    private messageService: MessageService,
-    private loginService: LoginService
+    private messageService: MessageService
   ) {
     // Verifica se a aplicação foi reinicializada e procede a verificação da sessão, se está ativa
     // https://stackoverflow.com/questions/56325272/detect-browser-refresh-in-angular-project
@@ -31,9 +29,6 @@ export class AppComponent {
               try {
                 if (user.auth) {
                   this.httpUtils.user = user;
-                  // this.loginService
-                  //   .loginWithCredentialsOrHeader(user.auth)
-                  //   .subscribe();
                   this.httpUtils.authenticated = user.cpf !== null;
                   this.delete();
                 }
