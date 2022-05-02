@@ -43,19 +43,13 @@ export class ContractService {
     });
   }
 
-  // registerContract(contract: Contract): Observable<any> {
-  //   return this.httpClient.post(
-  //     ContractService.NEWCONTRACT_PATH,
-  //     JSON.stringify(contract),
-  //     { headers: this.httpUtils.getHeaders(), observe: 'response' }
-  //   );
-  // }
-
   registerContract(contract: Contract): Observable<any> {
-    console.log(JSON.stringify(contract));
-    return new Observable();
+    return this.httpClient.post(
+      ContractService.NEWCONTRACT_PATH,
+      JSON.stringify(contract),
+      { headers: this.httpUtils.getHeaders(), observe: 'response' }
+    );
   }
-
 
   canAdditivate(contract: Contract): boolean {
     return (

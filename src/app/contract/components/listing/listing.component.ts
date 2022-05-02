@@ -85,7 +85,6 @@ export class ListingComponent implements OnInit {
       )
       .subscribe({
         next: (data) => {
-          console.log(data);
           const page: Page = data;
           this._itemCount = page.totalElements;
           this._index = page.number;

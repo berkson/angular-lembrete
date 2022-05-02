@@ -249,7 +249,6 @@ export class RegisterComponent implements OnInit {
           },
           error: (err) => {
             if (err.error.errors[0].status === 400) {
-              console.info('Nova Empresa');
               this.companyForm.get('name')?.setValue('');
             }
           },
@@ -278,7 +277,6 @@ export class RegisterComponent implements OnInit {
           },
           error: (err) => {
             if (err.error.errors[0].status === 400) {
-              console.info('Novo Interessado!');
               this.interested.controls[index].get('name')!.setValue('');
               this.interested.controls[index].get('email')!.setValue('');
               this.interestedPhones(index).controls[0].setValue('');
