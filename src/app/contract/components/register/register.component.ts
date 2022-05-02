@@ -319,20 +319,11 @@ export class RegisterComponent implements OnInit {
       )
       .subscribe({
         error: (err) => {
-          this.handleValidationErrors(err.error.errors);
+          this.messageService.handleValidationErrors(err.error.errors);
         },
       });
   }
   navigateToList() {
     this.router.navigate(['/contract']);
-  }
-
-  handleValidationErrors(problems: any) {
-    try {
-      let errors: ValidationError[] = problems;
-      this.messageService.showSnackErrorsDetails(errors);
-    } catch (e) {
-      this.messageService.snackErrorMessage(ErrorMessages.tryAgain);
-    }
   }
 }

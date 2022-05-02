@@ -87,6 +87,15 @@ export class MessageService {
     }
   }
 
+  handleValidationErrors(problems: any) {
+    try {
+      let errors: ValidationError[] = problems;
+      this.showSnackErrorsDetails(errors);
+    } catch (e) {
+      this.snackErrorMessage(ErrorMessages.tryAgain);
+    }
+  }
+
   private multiError(
     errors: string[],
     verticalPosition: MatSnackBarVerticalPosition = 'top'

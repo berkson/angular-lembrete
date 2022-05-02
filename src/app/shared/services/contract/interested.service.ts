@@ -20,7 +20,7 @@ export class InterestedService {
     let url = InterestedService.INTERESTED_PATH + `/${cpf}`;
     return this.httpClient.get(
       url,
-      this.httpUtilService.user.auth ? this.httpUtilService.authHeaders() : {}
+      this.httpUtilService.user.auth ? this.httpUtilService.headersConfig() : {}
     );
   }
 }

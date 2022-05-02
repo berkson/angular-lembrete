@@ -7,7 +7,7 @@ export const ErrorMessages = {
   notAdmin: 'Acesse o sistema como Administrador',
   notUser: 'Somente usuários têm acesso ao sistema',
   resctrict: 'Restrito',
-  contractAlreadyExists: (number:string) => `O contrato ${number} já existe!`
+  contractAlreadyExists: (number: string) => `O contrato ${number} já existe!`,
 };
 export const Messages = {
   success: 'Sucesso',
@@ -16,4 +16,5 @@ export const Messages = {
   enterNewPass: 'Digite a nova senha.',
   changePassSuccess: 'Senha alterada com sucesso!',
   registerContractSuccess: 'Contrato cadastrado com sucesso!',
+  additivateSuccess: 'Contrato aditivado com sucesso!',
 };

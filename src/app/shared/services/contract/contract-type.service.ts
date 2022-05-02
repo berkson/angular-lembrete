@@ -18,7 +18,7 @@ export class ContractTypeService {
   getAllContractTypes(): Observable<any> {
     return this.httpClient.get(
       ContractTypeService.CONTRCT_TYPE_PATH,
-      this.httpUtils.user.auth ? this.httpUtils.authHeaders() : {}
+      this.httpUtils.user.auth ? this.httpUtils.headersConfig() : {}
     );
   }
 }

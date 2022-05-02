@@ -19,7 +19,7 @@ export class LoginService {
   loginWithCredentialsOrHeader(credentials: Credentials): Observable<any> {
     return this.httpClient.get(
       LoginService.AUTH_PATH,
-      this.httpUtils.authHeaders(credentials)
+      this.httpUtils.headersConfig(credentials)
     );
   }
 }

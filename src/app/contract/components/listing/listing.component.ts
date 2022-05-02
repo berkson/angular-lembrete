@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -110,12 +110,16 @@ export class ListingComponent implements OnInit {
     });
   }
 
-  additivate(event: any, document: any): void {
+  showDialog(event: any, document: any): void {
     event.stopPropagation();
     let contract: Contract = document as Contract;
-    let dialogRef = this.dialog.open(AditiveDialogComponent, {
-      width: '80%',
+    let config: MatDialogConfig = {
+      panelClass: 'additive-dialog-panel',
       data: contract,
-    });
+    };
+    let dialogRef = this.dialog.open(AditiveDialogComponent, config);
+    dialogRef
+      .afterClosed()
+      .subscribe({ complete: () => this.queryData(this._index) });
   }
 }

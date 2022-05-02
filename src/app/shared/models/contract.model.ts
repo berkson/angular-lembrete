@@ -13,16 +13,16 @@ export class Contract {
     public interested?: Array<Interested>
   ) {}
 
-  public toJSON() {
-    return `{
-        "id": ${this.id},
-        "contract_number": "${this.contractNumber}",
-        "company": ${this.company?.toJSON()},
-        "initial_date": "${this.initialDate}",
-        "final_date": "${this.finalDate}",
-        "contract_type": ${JSON.stringify(this.contractType)},
-        "interested_list": ${JSON.stringify(this.interested)}
-      }`;
+  toJSON() {
+    return {
+      id: this.id,
+      contract_number: this.contractNumber,
+      company: this.company,
+      initial_date: this.initialDate,
+      final_date: this.finalDate,
+      contract_type: this.contractType,
+      interested_list: this.interested,
+    };
   }
 
   /**

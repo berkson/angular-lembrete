@@ -19,7 +19,7 @@ export class CompanyService {
     let url = CompanyService.COMPANY_PATH + `/${cnpj}`;
     return this.httpClient.get(
       url,
-      this.httpUtilService.user.auth ? this.httpUtilService.authHeaders() : {}
+      this.httpUtilService.user.auth ? this.httpUtilService.headersConfig() : {}
     );
   }
 }

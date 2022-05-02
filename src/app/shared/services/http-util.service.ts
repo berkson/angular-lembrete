@@ -61,7 +61,14 @@ export class HttpUtilService {
       .subscribe();
   }
 
-  authHeaders(credentials?: Credentials) {
+  /**
+   * Sets the auth header and returns the request configuration object
+   * with authorization data, if exists
+   *
+   * @param credentials login credentials
+   * @returns configuration with pre-stabilished auth headers
+   */
+  headersConfig(credentials?: Credentials) {
     let headers: HttpHeaders = new HttpHeaders();
 
     // primeiro login
@@ -80,6 +87,17 @@ export class HttpUtilService {
     }
 
     return { headers: headers };
+  }
+
+  /**
+   * Returns only the headers object with pre-configured authorization data,
+   * if exists.
+   *
+   * @returns header object with authorization data
+   */
+  getHeaders() {
+    let headers = this.user.auth ? this.headersConfig().headers : {};
+    return headers;
   }
 
   verifyRefresh() {

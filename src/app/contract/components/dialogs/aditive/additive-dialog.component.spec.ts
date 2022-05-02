@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { AditiveDialogComponent } from './aditive-dialog.component';
+import { AditiveDialogComponent } from './additive-dialog.component';
 
 describe('AditiveDialogComponent', () => {
   let component: AditiveDialogComponent;

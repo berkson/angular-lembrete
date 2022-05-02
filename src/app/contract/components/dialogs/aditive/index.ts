@@ -1,1 +1,1 @@
-export * from './aditive-dialog.component';
+export * from './additive-dialog.component';

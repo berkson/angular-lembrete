@@ -7,12 +7,12 @@ export class ContractType {
   ) {}
 
   toJSON() {
-    return `{
-      id: ${this.id},
-      code: ${this.code},
-      description: ${this.description},
-      max_validity: ${this.maxValidity}
-    }`;
+    return {
+      id: this.id,
+      code: this.code,
+      description: this.description,
+      max_validity: this.maxValidity,
+    };
   }
 
   static fromObject(object: any): ContractType {
