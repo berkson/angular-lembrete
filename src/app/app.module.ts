@@ -33,9 +33,9 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { PtBrMatPaginatorIntl } from './shared/intl';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatListModule } from '@angular/material/list';
-import { RouterModule } from '@angular/router';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 @NgModule({
@@ -60,6 +60,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     ContractModule,
     ContractRoutingModule,
     MatMomentDateModule,
+    MatCheckboxModule,
 
     AppRoutingModule,
   ],

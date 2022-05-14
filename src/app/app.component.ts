@@ -29,7 +29,7 @@ export class AppComponent {
               try {
                 if (user.auth) {
                   this.httpUtils.user = user;
-                  this.httpUtils.authenticated = user.cpf !== null;
+                  this.httpUtils.authenticated = user.cpf !== null || user.username !== null;
                   this.delete();
                 }
               } catch (e) {

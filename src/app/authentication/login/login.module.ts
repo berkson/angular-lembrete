@@ -23,6 +23,9 @@ import {
 } from '@angular/material/core';
 import { ForgotpassComponent } from './components/forgotpass/forgotpass.component';
 import { InformcodeComponent } from './components/informcode/informcode.component';
+import { NgxMaskModule } from 'ngx-mask';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [LoginComponent, LoginTemplateComponent, ForgotpassComponent, InformcodeComponent],
@@ -41,6 +44,9 @@ import { InformcodeComponent } from './components/informcode/informcode.componen
     MatSnackBarModule,
     FlexLayoutModule,
     SharedModule,
+    NgxMaskModule,
+    MatCheckboxModule,
+    MatRadioModule
   ],
   providers: [
     LoginService,

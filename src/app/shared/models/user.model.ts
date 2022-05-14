@@ -8,6 +8,8 @@ export class User {
     public name?: string,
     public enabled?: boolean,
     public roles?: Array<Role>,
-    public auth?: string
+    public auth?: string,
+    // ldap use only
+    public username?: string
   ) {}
 }
