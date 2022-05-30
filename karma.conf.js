@@ -25,7 +25,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/angular_lembrete'),
+      dir: require('path').join(__dirname, './coverage/angular-lembrete'),
       subdir: '.',
       reporters: [
         { type: 'html' },
