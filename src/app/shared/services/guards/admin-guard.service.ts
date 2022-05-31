@@ -7,6 +7,7 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
+import { Auths } from '../../enums';
 import { ErrorMessages } from '../../messages';
 import { HttpUtilService } from '../http-util.service';
 import { MessageService } from '../message.service';
@@ -33,7 +34,7 @@ export class AdminGuardService implements CanActivate {
     let roles = this.httpUtil.getUserRoles();
     if (roles !== undefined) {
       for (let role of roles) {
-        if (role.authority === 'ROLE_ADMIN') {
+        if (role.authority === Auths.ADMIN) {
           return true;
         }
       }

@@ -33,7 +33,7 @@ export class UserGuardService implements CanActivate {
     if (roles !== undefined) {
       for (let role of roles) {
         if (
-          role.authority === Auths.PUBLICO_SIGECON ||
+          role.authority === Auths.SIGECON_PUBLICO ||
           role.authority === Auths.ADMIN
         ) {
           return true;
